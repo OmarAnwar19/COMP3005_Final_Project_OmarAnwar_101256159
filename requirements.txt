@@ -1,0 +1,7 @@
+flask
+pyqtwebengine
+pyqt5
+flask_wtf
+wtforms
+flask_sqlalchemy
+psycopg2-binary

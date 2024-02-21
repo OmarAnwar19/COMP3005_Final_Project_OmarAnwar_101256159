@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health & Fitness Club</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for("static", filename="style.css") }}"
+    />
+  </head>
+  <body>
+    <h1>Welcome to Health & Fitness Club</h1>
+    <a href="{{ url_for("member_dashboard") }}">Member Dashboard</a><br />
+    <a href="{{ url_for("trainer_dashboard") }}">Trainer Dashboard</a><br />
+    <a href="{{ url_for("admin_dashboard") }}">Admin Dashboard</a>
+  </body>
+</html>
