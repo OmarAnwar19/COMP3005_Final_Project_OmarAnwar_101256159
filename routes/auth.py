@@ -1,10 +1,7 @@
-
-from flask import render_template, request, redirect, url_for, session, Blueprint
-from models import Member, Trainer, Admin
-from database.db import db
+from flask import render_template, request, redirect, url_for, session, Blueprint, flash
+from database.raw_queries import get_user_by_username, insert_user
 
 auth = Blueprint("auth", __name__)
-
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
@@ -12,25 +9,18 @@ def login():
         user_type = request.form.get("user_type")
         username = request.form.get("username")
         password = request.form.get("password")
-        if user_type == "member":
-            user = Member.query.filter_by(username=username).first()
-            if user and user.check_password(password):
-                session["username"] = username
-                session["user_type"] = user_type
-                return redirect(url_for("member_dashboard"))
-        elif user_type == "trainer":
-            user = Trainer.query.filter_by(username=username).first()
-            if user and user.check_password(password):
-                session["username"] = username
-                session["user_type"] = user_type
-                return redirect(url_for("trainer_dashboard"))
-        elif user_type == "admin":
-            user = Admin.query.filter_by(username=username).first()
-            if user and user.check_password(password):
-                session["username"] = username
-                session["user_type"] = user_type
-                return redirect(url_for("admin_dashboard"))
-        return "Invalid username or password"
+        user = get_user_by_username(user_type, username)
+
+        if user and user[2] == password: 
+            session["username"] = username
+            session["user_type"] = user_type
+            if user_type == "Administrators":
+                return redirect(url_for("admin_dash.admin_dashboard"))
+            elif user_type == "Members":
+                return redirect(url_for("member_dash.member_dashboard"))
+            elif user_type == "Trainers":
+                return redirect(url_for("trainer_dash.trainer_dashboard"))
+        flash("Error. Invalid username or password.")
     return render_template("login.html")
 
 
@@ -40,13 +30,11 @@ def register():
         user_type = request.form.get("user_type")
         username = request.form.get("username")
         password = request.form.get("password")
-        if user_type == "member":
-            user = Member(username=username, password=password)
-        elif user_type == "trainer":
-            user = Trainer(username=username, password=password)
-        elif user_type == "admin":
-            user = Admin(username=username, password=password)
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for("login"))
+        user = get_user_by_username(user_type, username)
+        if user:
+            flash(f"{user_type} {username} already exists.")
+        else:
+            insert_user(user_type, username, password)
+            flash(f"{user_type} {username} has been registered successfully")
+        return redirect(url_for("auth.login"))
     return render_template("register.html")
