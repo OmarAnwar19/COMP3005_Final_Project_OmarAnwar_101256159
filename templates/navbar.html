@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="/">Your Site</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      {% if user_type == 'member' %}
+      <li class="nav-item active">
+        <a class="nav-link" href="/member/dashboard">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/member/profile">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/member/schedule">Schedule</a>
+      </li>
+      {% elif user_type == 'trainer' %}
+      <li class="nav-item active">
+        <a class="nav-link" href="/trainer/dashboard">Dashboard</a>
+      </li>
+      {% elif user_type == 'admin' %}
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+      </li>
+      {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>

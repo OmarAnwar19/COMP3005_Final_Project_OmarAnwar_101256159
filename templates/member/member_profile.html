@@ -1,0 +1,124 @@
+{% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
+<div class="container mt-5">
+  <h1>Member Profile</h1>
+  <form method="POST">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        id="username"
+        name="username"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        name="password"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="exercises">Exercises</label>
+      <div id="exercises">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="Exercise2"
+            id="exercise2"
+            name="exercises"
+          />
+          <label class="form-check-label" for="exercise2">Cardio</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="Exercise2"
+            id="exercise2"
+            name="exercises"
+          />
+          <label class="form-check-label" for="exercise2">Pilates</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="Exercise2"
+            id="exercise2"
+            name="exercises"
+          />
+          <label class="form-check-label" for="exercise2"
+            >Weight Training</label
+          >
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="Exercise1"
+            id="exercise1"
+            name="exercises"
+          />
+          <label class="form-check-label" for="exercise1"
+            >Bodyweight Exercises</label
+          >
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="Exercise2"
+            id="exercise2"
+            name="exercises"
+          />
+          <label class="form-check-label" for="exercise2">Cross-fit</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="fitness_goal">Fitness Goal</label>
+      <select class="form-control" id="fitness_goal" name="fitness_goal">
+        <option>Lose weight</option>
+        <option>Gain muscle</option>
+        <option>Improve stamina</option>
+        <option>Increase flexibility</option>
+        <option>Improve overall fitness</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="statistics">Statistics</label>
+      <input
+        type="text"
+        class="form-control"
+        id="statistics"
+        name="statistics"
+      />
+    </div>
+    <div class="form-group">
+      <label for="health_metrics">Health Metrics</label>
+      <input
+        type="text"
+        class="form-control"
+        id="health_metrics"
+        name="health_metrics"
+      />
+    </div>
+    <div class="form-group">
+      <label for="achievements">Achievements</label>
+      <input
+        type="text"
+        class="form-control"
+        id="achievements"
+        name="achievements"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Update Profile</button>
+  </form>
+</div>
+{% endblock %}

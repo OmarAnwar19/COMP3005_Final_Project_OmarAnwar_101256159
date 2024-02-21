@@ -1,0 +1,49 @@
+{% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
+<div class="container mt-5">
+  <h1>Hello, {{ member.username }}!</h1>
+  <div class="container mt-5">
+    <h1>Member Dashboard</h1>
+    <a href="/member/profile">Update Profile</a>
+    <a href="/member/schedule">Schedule</a>
+    <h2>Exercises</h2>
+    {% if exercises %}
+    <ul>
+      {% for exercise in exercises %}
+      <li>{{ exercise }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>
+      No exercises found. Please
+      <a href="/member/profile">update your profile</a>.
+    </p>
+    {% endif %}
+    <h2>Achievements</h2>
+    {% if achievements %}
+    <ul>
+      {% for achievement in achievements %}
+      <li>{{ achievement }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>
+      No achievements found. Please
+      <a href="/member/profile">update your profile</a>.
+    </p>
+    {% endif %}
+    <h2>Health Stats</h2>
+    {% if health_stats %}
+    <ul>
+      {% for stat in health_stats %}
+      <li>{{ stat }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>
+      No health stats found. Please
+      <a href="/member/profile">update your profile</a>.
+    </p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

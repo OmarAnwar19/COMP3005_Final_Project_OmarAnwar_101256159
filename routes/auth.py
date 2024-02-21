@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, session, Blueprint, flash
-from database.raw_queries import get_user_by_username, insert_user
+from database.queries import get_user_by_username, insert_user
 
 auth = Blueprint("auth", __name__)
 
@@ -21,7 +21,7 @@ def login():
             elif user_type == "Trainers":
                 return redirect(url_for("trainer_dash.trainer_dashboard"))
         flash("Error. Invalid username or password.")
-    return render_template("login.html")
+    return render_template("auth/login.html")
 
 
 @auth.route("/register", methods=["GET", "POST"])
@@ -37,4 +37,11 @@ def register():
             insert_user(user_type, username, password)
             flash(f"{user_type} {username} has been registered successfully")
         return redirect(url_for("auth.login"))
-    return render_template("register.html")
+    return render_template("auth/register.html")
+
+
+@auth.route("/logout")
+def logout():
+    session.clear()
+    flash("You have been logged out.")
+    return redirect(url_for("auth.login"))
