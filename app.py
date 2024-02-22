@@ -32,5 +32,9 @@ app.register_blueprint(member_view)
 app.register_blueprint(trainer_view)
 
 
+# TODO: Add error handling for 404
+# TODO: Add login / registration password checking
+# TODO: Cleanup member dashboard and view
+
 if __name__ == "__main__":
     app.run(debug=True)
