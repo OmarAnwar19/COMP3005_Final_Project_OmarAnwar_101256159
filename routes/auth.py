@@ -15,11 +15,11 @@ def login():
             session["username"] = username
             session["user_type"] = user_type
             if user_type == "Administrators":
-                return redirect(url_for("admin_dash.admin_dashboard"))
+                return redirect(url_for("admin_view.admin_dashboard"))
             elif user_type == "Members":
-                return redirect(url_for("member_dash.member_dashboard"))
+                return redirect(url_for("member_view.member_dashboard"))
             elif user_type == "Trainers":
-                return redirect(url_for("trainer_dash.trainer_dashboard"))
+                return redirect(url_for("trainer_view.trainer_dashboard"))
         flash("Error. Invalid username or password.")
     return render_template("auth/login.html")
 
@@ -34,7 +34,13 @@ def register():
         if user:
             flash(f"{user_type} {username} already exists.")
         else:
-            insert_user(user_type, username, password)
+            workouts_completed = 0
+            sessions_booked = 0
+            calories_burned = 0
+            active_minutes = 0
+            distance_covered = 0
+
+            insert_user(user_type, username, password, workouts_completed, sessions_booked, calories_burned, active_minutes, distance_covered)
             flash(f"{user_type} {username} has been registered successfully")
         return redirect(url_for("auth.login"))
     return render_template("auth/register.html")

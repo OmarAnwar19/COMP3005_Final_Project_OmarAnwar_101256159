@@ -19,14 +19,6 @@ CREATE TABLE IF NOT EXISTS Administrators (
     password VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Sessions (
-    id SERIAL PRIMARY KEY,
-    member_id INTEGER REFERENCES Members(id),
-    trainer_id INTEGER REFERENCES Trainers(id),
-    session_time TIMESTAMPTZ NOT NULL,
-    session_type VARCHAR(50) NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS Rooms (
     id SERIAL PRIMARY KEY,
     room_name VARCHAR(50) NOT NULL,
@@ -37,6 +29,14 @@ CREATE TABLE IF NOT EXISTS Equipment (
     id SERIAL PRIMARY KEY,
     equipment_name VARCHAR(50) NOT NULL,
     maintenance_due_date TIMESTAMPTZ
+);
+
+CREATE TABLE IF NOT EXISTS Sessions (
+    id SERIAL PRIMARY KEY,
+    member_id INTEGER REFERENCES Members(id),
+    trainer_id INTEGER REFERENCES Trainers(id),
+    session_time TIMESTAMPTZ NOT NULL,
+    session_type VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Payments (
@@ -63,7 +63,8 @@ CREATE TABLE IF NOT EXISTS Achievements (
 CREATE TABLE IF NOT EXISTS HealthStats (
     id SERIAL PRIMARY KEY,
     member_id INTEGER REFERENCES Members(id),
-    stat_name VARCHAR(50) NOT NULL,
-    stat_value VARCHAR(50) NOT NULL,
+    workouts_completed INTEGER DEFAULT 0,
+    sessions_booked INTEGER DEFAULT 0,
+    calories_burned INTEGER DEFAULT 0,
     stat_date TIMESTAMPTZ NOT NULL
 );

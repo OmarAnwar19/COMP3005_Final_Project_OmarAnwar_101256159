@@ -1,12 +1,12 @@
 from flask import render_template, Blueprint
 
-trainer_dash = Blueprint("trainer_dash", __name__)
+trainer_view = Blueprint("trainer_view", __name__)
 
-@trainer_dash.route("/trainer/dashboard")
+@trainer_view.route("/trainer/dashboard")
 def trainer_dashboard():
     return render_template("trainer/trainer_dashboard.html")
 
 
-@trainer_dash.route("/trainer/schedule", methods=["GET", "POST"])
+@trainer_view.route("/trainer/schedule", methods=["GET", "POST"])
 def trainer_schedule():
     return render_template("trainer/trainer_schedule.html")
