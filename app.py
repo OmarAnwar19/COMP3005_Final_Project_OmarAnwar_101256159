@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, session
+from flask import Flask, redirect, url_for, session, render_template
 from database.db import setup_db
 from database.keys import DB_KEY, SECRET
 
@@ -26,14 +26,17 @@ def index():
         elif user_type == "Administrators":
             return redirect(url_for("admin_view.admin_dashboard"))
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
+
 app.register_blueprint(auth)
 app.register_blueprint(admin_view)
 app.register_blueprint(member_view)
 app.register_blueprint(trainer_view)
 
 
-# TODO: Add error handling for 404
-# TODO: Add login / registration password checking
+# TODO: Fix member route queries
 # TODO: Cleanup member dashboard and view
 # TODO: Refactor and organize code
 

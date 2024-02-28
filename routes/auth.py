@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for, session, Blueprint, flash
 from database.queries import get_user_by_username, insert_user
+from util.helpers import validate_password
 
 auth = Blueprint("auth", __name__)
 
@@ -20,7 +21,7 @@ def login():
                 return redirect(url_for("member_view.member_dashboard"))
             elif user_type == "Trainers":
                 return redirect(url_for("trainer_view.trainer_dashboard"))
-        flash("Error. Invalid username or password.")
+        flash("Invalid username or password.", "danger")
     return render_template("auth/login.html")
 
 
@@ -32,7 +33,9 @@ def register():
         password = request.form.get("password")
         user = get_user_by_username(user_type, username)
         if user:
-            flash(f"{user_type} {username} already exists.")
+            flash(f"{user_type} {username} already exists.", "warning")
+        elif not validate_password(password):
+            flash("Password must be at least 6 characters long, and contain a number and an uppercase letter.", "danger")
         else:
             workouts_completed = 0
             sessions_booked = 0
@@ -41,13 +44,13 @@ def register():
             distance_covered = 0
 
             insert_user(user_type, username, password, workouts_completed, sessions_booked, calories_burned, active_minutes, distance_covered)
-            flash(f"{user_type} {username} has been registered successfully")
-        return redirect(url_for("auth.login"))
+            flash(f"{user_type} {username} has been registered successfully", "success")
+        return redirect(url_for("auth.register"))
     return render_template("auth/register.html")
 
 
 @auth.route("/logout")
 def logout():
     session.clear()
-    flash("You have been logged out.")
+    flash("You have been logged out.", "info")
     return redirect(url_for("auth.login"))

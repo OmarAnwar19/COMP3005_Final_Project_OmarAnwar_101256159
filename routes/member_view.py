@@ -22,7 +22,7 @@ def member_profile():
         health_metrics = request.form.get("health_metrics")
         member_id = session.get("member_id")  # Assuming you're storing the member id in session
         update_member(member_id, username, password, fitness_goal, health_metrics)
-        flash("Profile updated successfully")
+        flash("Profile updated successfully", "success")
         return redirect(url_for("member_view.member_dashboard"))
     else:
         member = get_member_by_id(session.get("member_id"))
@@ -36,7 +36,7 @@ def member_schedule():
         session_time = request.form.get("session_time")
         member_id = session.get("member_id")  # Assuming you're storing the member id in session
         book_session(member_id, trainer_id, session_time)
-        flash("Session booked successfully")
+        flash("Session booked successfully", "success")
         return redirect(url_for("member_view.member_dashboard"))
     else:
         trainers = get_available_trainers()
@@ -53,7 +53,7 @@ def update_profile():
         achievements = request.form.get("achievements").split(',')
 
         update_user_profile(user_type, username, fitness_goal, exercises, achievements)
-        flash("Profile updated successfully.")
+        flash("Profile updated successfully.", "success")
         return redirect(url_for("member_view.member_dashboard"))
 
 
@@ -66,5 +66,5 @@ def book_session():
         session_type = request.form.get("session_type")
 
         book_new_session(username, trainer_id, session_time, session_type)
-        flash("Session booked successfully.")
+        flash("Session booked successfully.", "success")
         return redirect(url_for("member_view.member_schedule"))
