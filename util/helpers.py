@@ -8,3 +8,7 @@ def validate_password(password):
     if not re.search("[A-Z]", password):
         return False
     return True
+
+
+def format_date(date):
+    return date.strftime("%B %d, %Y, %I:%M %p %Z")

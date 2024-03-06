@@ -89,6 +89,20 @@ def get_member_health_stats(member_id):
     return health_stats
 
 
+def get_member_sessions(member_id):
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT Sessions.*, Trainers.username 
+        FROM Sessions 
+        INNER JOIN Trainers ON Sessions.trainer_id = Trainers.id 
+        WHERE Sessions.member_id = %s
+    """, (member_id,))
+    sessions = cur.fetchall()
+    conn.close()
+    return sessions
+
+
 def get_available_trainers():
     conn = connect()
     cur = conn.cursor()
@@ -119,12 +133,19 @@ def update_user_profile(user_type, username, password, fitness_goal, achievement
     conn.close()
 
 
-def book_new_session(username, trainer_id, session_time, session_type):
+def book_new_session(member_id, trainer_id, session_time, session_type):
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT id FROM Members WHERE username = %s", (username,))
-    member_id = cur.fetchone()[0]
     cur.execute("INSERT INTO Sessions (member_id, trainer_id, session_time, session_type) VALUES (%s, %s, %s, %s)", (member_id, trainer_id, session_time, session_type))
+    conn.commit()
+    cur.close()
+    conn.close()
+
+
+def cancel_member_session(session_id):
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM Sessions WHERE id = %s", (session_id,))
     conn.commit()
     cur.close()
     conn.close()

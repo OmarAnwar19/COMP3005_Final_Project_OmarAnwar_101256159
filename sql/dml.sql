@@ -34,12 +34,14 @@ INSERT INTO Equipment (equipment_name, maintenance_due_date) VALUES
 ('Bike Bison', '2022-12-31 00:00:00'),
 ('Weight Wolverine', '2022-12-31 00:00:00');
 
-INSERT INTO Sessions (trainer_id, session_time, session_type) VALUES
-(1, '2022-12-01 10:00:00', 'Personal Training'),
-(2, '2022-12-01 11:00:00', 'Group Fitness'),
-(3, '2022-12-01 12:00:00', 'Personal Training'),
-(4, '2022-12-01 13:00:00', 'Group Fitness'),
-(5, '2022-12-01 14:00:00', 'Personal Training');
+INSERT INTO Sessions (trainer_id, member_id, session_time, session_type) VALUES
+(1, 1, '2022-12-01 10:00:00', 'Personal Training'),
+(2, 2, '2022-12-01 11:00:00', 'Group Fitness'),
+(3, 3, '2022-12-01 12:00:00', 'Personal Training'),
+(4, 4, '2022-12-01 13:00:00', 'Group Fitness'),
+(5, 5, '2022-12-01 14:00:00', 'Personal Training'),
+(1, 6, '2022-12-01 15:00:00', 'Group Fitness');
+
 
 INSERT INTO Payments (amount) VALUES
 (50.00),

@@ -36,7 +36,6 @@ app.register_blueprint(member_view)
 app.register_blueprint(trainer_view)
 
 
-# TODO: Complete member schedule and view
 # TODO: Complete trainer dashboard and view
 # TODO: Complete admin dashboard and view
 # TODO: Refactor and organize code
