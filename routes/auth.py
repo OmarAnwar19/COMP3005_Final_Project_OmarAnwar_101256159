@@ -4,6 +4,7 @@ from util.helpers import validate_password
 
 auth = Blueprint("auth", __name__)
 
+
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -15,6 +16,8 @@ def login():
         if user and user[2] == password: 
             session["username"] = username
             session["user_type"] = user_type
+            session["member_id"] = user[0]
+            flash(f"Logged in successfully!", "success")
             if user_type == "Administrators":
                 return redirect(url_for("admin_view.admin_dashboard"))
             elif user_type == "Members":
@@ -43,7 +46,7 @@ def register():
             active_minutes = 0
             distance_covered = 0
 
-            insert_user(user_type, username, password, workouts_completed, sessions_booked, calories_burned, active_minutes, distance_covered)
+            member_id = insert_user(user_type, username, password, workouts_completed, sessions_booked, calories_burned, active_minutes, distance_covered)
             flash(f"{user_type} {username} has been registered successfully", "success")
         return redirect(url_for("auth.register"))
     return render_template("auth/register.html")

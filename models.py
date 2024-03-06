@@ -12,19 +12,18 @@ def connect():
 
 
 class Member:
-    def __init__(self, id, username, password, fitness_goal, health_metrics):
+    def __init__(self, id, username, password, fitness_goal):
         self.id = id
         self.username = username
         self.password = password
         self.fitness_goal = fitness_goal
-        self.health_metrics = health_metrics
 
     @staticmethod
-    def register(username, password, fitness_goal=None, health_metrics=None):
+    def register(username, password, fitness_goal=None):
         conn = connect()
         cur = conn.cursor()
-        cur.execute("INSERT INTO members (username, password, fitness_goal, health_metrics) VALUES (%s, %s, %s, %s)", 
-                    (username, password, fitness_goal, health_metrics))
+        cur.execute("INSERT INTO members (username, password, fitness_goal) VALUES (%s, %s, %s)", 
+                    (username, password, fitness_goal))
         conn.commit()
         conn.close()
 

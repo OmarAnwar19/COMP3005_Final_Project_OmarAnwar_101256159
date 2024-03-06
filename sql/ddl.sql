@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS Members (
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
     fitness_goal VARCHAR(100),
-    health_metrics VARCHAR(100)
+    achievements VARCHAR(256)
 );
 
 CREATE TABLE IF NOT EXISTS Trainers (
@@ -22,20 +22,20 @@ CREATE TABLE IF NOT EXISTS Administrators (
 CREATE TABLE IF NOT EXISTS Rooms (
     id SERIAL PRIMARY KEY,
     room_name VARCHAR(50) NOT NULL,
-    booking_time TIMESTAMPTZ
+    booking_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS Equipment (
     id SERIAL PRIMARY KEY,
     equipment_name VARCHAR(50) NOT NULL,
-    maintenance_due_date TIMESTAMPTZ
+    maintenance_due_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP+INTERVAL '1 year'
 );
 
 CREATE TABLE IF NOT EXISTS Sessions (
     id SERIAL PRIMARY KEY,
     member_id INTEGER REFERENCES Members(id),
     trainer_id INTEGER REFERENCES Trainers(id),
-    session_time TIMESTAMPTZ NOT NULL,
+    session_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     session_type VARCHAR(50) NOT NULL
 );
 
@@ -43,28 +43,20 @@ CREATE TABLE IF NOT EXISTS Payments (
     id SERIAL PRIMARY KEY,
     member_id INTEGER REFERENCES Members(id),
     amount DECIMAL(10, 2) NOT NULL,
-    payment_time TIMESTAMPTZ NOT NULL
+    payment_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS Exercises (
     id SERIAL PRIMARY KEY,
     member_id INTEGER REFERENCES Members(id),
     exercise_name VARCHAR(50) NOT NULL,
-    exercise_time TIMESTAMPTZ NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS Achievements (
-    id SERIAL PRIMARY KEY,
-    member_id INTEGER REFERENCES Members(id),
-    achievement_name VARCHAR(50) NOT NULL,
-    achievement_date TIMESTAMPTZ NOT NULL
+    exercise_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS HealthStats (
     id SERIAL PRIMARY KEY,
     member_id INTEGER REFERENCES Members(id),
-    workouts_completed INTEGER DEFAULT 0,
-    sessions_booked INTEGER DEFAULT 0,
-    calories_burned INTEGER DEFAULT 0,
-    stat_date TIMESTAMPTZ NOT NULL
+    weight_lbs INTEGER DEFAULT 0,
+    heart_rate INTEGER DEFAULT 0,
+    sleep_hours INTEGER DEFAULT 0
 );

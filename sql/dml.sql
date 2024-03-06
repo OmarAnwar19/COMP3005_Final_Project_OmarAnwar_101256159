@@ -1,9 +1,10 @@
-INSERT INTO Members (username, password, fitness_goal, health_metrics) VALUES
-('JohnDoe', 'password1', 'Lose weight', 'BMI: 25'),
-('JaneSmith', 'password2', 'Gain muscle', 'BMI: 20'),
-('RobertJohnson', 'password3', 'Improve stamina', 'BMI: 22'),
-('MichaelWilliams', 'password', 'Increase flexibility', 'BMI: 24'),
-('SarahBrown', 'password5', 'Improve overall fitness', 'BMI: 23');
+INSERT INTO Members (username, password, fitness_goal, achievements) VALUES
+('JohnDoe', 'password1', 'Lose weight', 'Won State Derby'),
+('JaneSmith', 'password2', 'Gain muscle', 'Climbed Everest'),
+('RobertJohnson', 'password3', 'Improve stamina', 'Ran 100 miles'),
+('MichaelWilliams', 'password', 'Increase flexibility', 'Won National Yoga Competition, Won International Yoga Competition'),
+('SarahBrown', 'password5', 'Improve overall fitness', 'Won World Strongman Competition'),
+('a', 'a', 'Win the lottery', 'Won the lottery');
 
 INSERT INTO Trainers (username, password, available) VALUES
 ('FitFrank', 'password1', TRUE),
@@ -33,37 +34,32 @@ INSERT INTO Equipment (equipment_name, maintenance_due_date) VALUES
 ('Bike Bison', '2022-12-31 00:00:00'),
 ('Weight Wolverine', '2022-12-31 00:00:00');
 
-INSERT INTO Sessions (id, trainer_id, session_time, session_type) VALUES
-(1, 1, '2022-12-01 10:00:00', 'Personal Training'),
-(2, 2, '2022-12-01 11:00:00', 'Group Fitness'),
-(3, 3, '2022-12-01 12:00:00', 'Personal Training'),
-(4, 4, '2022-12-01 13:00:00', 'Group Fitness'),
-(5, 5, '2022-12-01 14:00:00', 'Personal Training');
+INSERT INTO Sessions (trainer_id, session_time, session_type) VALUES
+(1, '2022-12-01 10:00:00', 'Personal Training'),
+(2, '2022-12-01 11:00:00', 'Group Fitness'),
+(3, '2022-12-01 12:00:00', 'Personal Training'),
+(4, '2022-12-01 13:00:00', 'Group Fitness'),
+(5, '2022-12-01 14:00:00', 'Personal Training');
 
-INSERT INTO Payments (id, amount, payment_time) VALUES
-(1, 50.00, '2022-12-01 11:00:00'),
-(2, 60.00, '2022-12-01 12:00:00'),
-(3, 70.00, '2022-12-01 13:00:00'),
-(4, 80.00, '2022-12-01 14:00:00'),
-(5, 90.00, '2022-12-01 15:00:00');
+INSERT INTO Payments (amount) VALUES
+(50.00),
+(60.00),
+(70.00),
+(80.00),
+(90.00);
 
-INSERT INTO Exercises (id, exercise_name, exercise_time) VALUES
-(1, 'Cardio', '2022-12-01 10:00:00'),
-(2, 'Cross-fit', '2022-12-01 11:00:00'),
-(3, 'Pilates', '2022-12-01 12:00:00'),
-(4, 'Cardio', '2022-12-01 13:00:00'),
-(5, 'Cardio', '2022-12-01 14:00:00');
+INSERT INTO Exercises (member_id, exercise_name) VALUES
+(1, 'Cardio'),
+(2, 'Pilates'),
+(3, 'Weights'),
+(4, 'Yoga'),
+(5, 'Yoga'),
+(6, 'Cross-fit');
 
-INSERT INTO Achievements (id, achievement_name, achievement_date) VALUES
-(1, '5k Run', '2022-12-01'),
-(2, '10k Run', '2022-12-01'),
-(3, 'Half Marathon', '2022-12-01'),
-(4, 'Marathon', '2022-12-01'),
-(5, 'Triathlon', '2022-12-01');
-
-INSERT INTO HealthStats (id, workouts_completed, sessions_booked, calories_burned, stat_date) VALUES
-(1, 10, 5, 500, '2022-12-01'),
-(2, 20, 10, 1000, '2022-12-01'),
-(3, 30, 15, 1500, '2022-12-01'),
-(4, 40, 20, 2000, '2022-12-01'),
-(5, 50, 25, 2500, '2022-12-01');
+INSERT INTO HealthStats (member_id, weight_lbs, heart_rate, sleep_hours) VALUES
+(1, 150, 70, 8),
+(2, 160, 72, 7),
+(3, 155, 68, 8),
+(4, 170, 75, 6),
+(5, 180, 70, 7),
+(6, 285, 80, 5);

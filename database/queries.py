@@ -1,5 +1,6 @@
 from models import connect
 
+
 def get_user_by_username(user_type, username):
     conn = connect()
     cur = conn.cursor()
@@ -8,16 +9,18 @@ def get_user_by_username(user_type, username):
     conn.close()
     return user
 
-def insert_user(user_type, username, password, workouts_completed, sessions_booked, calories_burned):
+
+def insert_user(user_type, username, password, weight_lbs, heart_rate, sleep_hours):
     conn = connect()
     cur = conn.cursor()
-    cur.execute(f"INSERT INTO {user_type} (username, password) VALUES (%s, %s) RETURNING id", (username, password))
+    cur.execute(f"INSERT INTO {user_type} (username, password, fitness_goal, achievements) VALUES (%s, %s, %s, %s) RETURNING id", (username, password, '', ''))
     user_id = cur.fetchone()[0]
-    cur.execute("INSERT INTO HealthStats (member_id, workouts_completed, sessions_booked, calories_burned) VALUES (%s, %s, %s, %s)", (user_id, workouts_completed, sessions_booked, calories_burned))
+    cur.execute("INSERT INTO HealthStats (member_id, weight_lbs, heart_rate, sleep_hours) VALUES (%s, %s, %s, %s)", (user_id, weight_lbs, heart_rate, sleep_hours))
     conn.commit()
     conn.close()
 
-def update_member(member_id, username, password, fitness_goal, health_metrics):
+
+def update_member(member_id, username, password, fitness_goal):
     conn = connect()
     cur = conn.cursor()
     cur.execute("SELECT * FROM Members WHERE username = %s", (username,))
@@ -25,11 +28,30 @@ def update_member(member_id, username, password, fitness_goal, health_metrics):
     if user and user[0] != member_id:
         username += "_1"
     cur.execute(
-        "UPDATE Members SET username = %s, password = %s, fitness_goal = %s, health_metrics = %s WHERE id = %s",
-        (username, password, fitness_goal, health_metrics, member_id)
+        "UPDATE Members SET username = %s, password = %s, fitness_goal = %s, WHERE id = %s",
+        (username, password, fitness_goal, member_id)
     )
     conn.commit()
     conn.close()
+
+
+def update_member_health_stats(member_id, weight_lbs, heart_rate, sleep_hours):
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("UPDATE HealthStats SET weight_lbs = %s, heart_rate = %s, sleep_hours = %s WHERE member_id = %s", (weight_lbs, heart_rate, sleep_hours, member_id))
+    conn.commit()
+    conn.close()
+
+
+def update_member_exercises(member_id, exercises):
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM Exercises WHERE member_id = %s", (member_id,))
+    for exercise in exercises:
+        cur.execute("INSERT INTO Exercises (member_id, exercise_name) VALUES (%s, %s)", (member_id, exercise))
+    conn.commit()
+    conn.close()
+
 
 def get_member_by_id(member_id):
     conn = connect()
@@ -39,6 +61,7 @@ def get_member_by_id(member_id):
     conn.close()
     return member
 
+
 def get_member_exercises(member_id):
     conn = connect()
     cur = conn.cursor()
@@ -47,21 +70,24 @@ def get_member_exercises(member_id):
     conn.close()
     return exercises
 
+
 def get_member_achievements(member_id):
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM Achievements WHERE member_id = %s", (member_id,))
+    cur.execute("SELECT achievements FROM members WHERE id = %s", (member_id,))
     achievements = cur.fetchall()
     conn.close()
     return achievements
 
+
 def get_member_health_stats(member_id):
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM HealthStats WHERE member_id = %s", (member_id,))
+    cur.execute("SELECT * FROM HealthStats WHERE id = %s", (member_id,))
     health_stats = cur.fetchall()
     conn.close()
     return health_stats
+
 
 def get_available_trainers():
     conn = connect()
@@ -70,6 +96,7 @@ def get_available_trainers():
     trainers = cur.fetchall()
     conn.close()
     return trainers
+
 
 def book_session(member_id, trainer_id, session_time):
     conn = connect()
@@ -81,18 +108,12 @@ def book_session(member_id, trainer_id, session_time):
     conn.commit()
     conn.close()
 
-def update_user_profile(user_type, username, fitness_goal, exercises, achievements):
+
+def update_user_profile(user_type, username, password, fitness_goal, achievements):
     conn = connect()
     cur = conn.cursor()
-    cur.execute("UPDATE {user_type} SET fitness_goal = %s WHERE username = %s", (fitness_goal, username))
-    cur.execute("SELECT id FROM {user_type} WHERE username = %s", (username,))
-    member_id = cur.fetchone()[0]
-
-    for exercise in exercises:
-        cur.execute("INSERT INTO Exercises (member_id, exercise_name, exercise_time) VALUES (%s, %s, NOW())", (member_id, exercise))
-    for achievement in achievements:
-        cur.execute("INSERT INTO Achievements (member_id, achievement_name, achievement_date) VALUES (%s, %s, NOW())", (member_id, achievement))
-
+    cur.execute(f"UPDATE {user_type} SET fitness_goal = %s, achievements = %s, password = %s WHERE username = %s", (fitness_goal, achievements, password, username))
+    cur.execute(f"SELECT id FROM {user_type} WHERE username = %s", (username,))
     conn.commit()
     cur.close()
     conn.close()

@@ -1,50 +1,64 @@
 {% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
+
 <div class="container mt-5">
-  <h1>Hello, {{ member.username }}!</h1>
+  <h1 class="mb-3">Hello, {{ member }}!</h1>
 
   {% with messages = get_flashed_messages(with_categories=true) %} {% if
-  messages %} {% for category, message in messages %}
-  <div class="alert alert-{{ category }}">{{ message }}</div>
-  {% endfor %} {% endif %} {% endwith %}
+  messages %}
+  <div class="mb-4">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %} {% endwith %}
 
-  <div class="container mt-5">
-    <a href="/member/profile">Update Profile</a>
-    <a href="/member/schedule">Schedule</a>
+  <div class="d-flex mb-5">
+    <a class="btn btn-primary mr-3" href="/member/profile">Update Profile</a>
+    <a class="btn btn-primary" href="/member/schedule">Schedule</a>
+  </div>
+
+  <div class="mb-5">
     <h2>Exercises</h2>
     {% if exercises %}
-    <ul>
+    <ul class="list-group">
       {% for exercise in exercises %}
-      <li>{{ exercise }}</li>
+      <li class="list-group-item">{{ exercise }}</li>
       {% endfor %}
     </ul>
     {% else %}
-    <p>
+    <p class="text-muted">
       No exercises found. Please
       <a href="/member/profile">update your profile</a>.
     </p>
     {% endif %}
+  </div>
+
+  <div class="mb-5">
     <h2>Achievements</h2>
     {% if achievements %}
-    <ul>
+    <ul class="list-group">
       {% for achievement in achievements %}
-      <li>{{ achievement }}</li>
+      <li class="list-group-item">{{ achievement }}</li>
       {% endfor %}
     </ul>
     {% else %}
-    <p>
+    <p class="text-muted">
       No achievements found. Please
       <a href="/member/profile">update your profile</a>.
     </p>
     {% endif %}
+  </div>
+
+  <div class="mb-5">
     <h2>Health Stats</h2>
     {% if health_stats %}
-    <ul>
-      {% for stat in health_stats %}
-      <li>{{ stat }}</li>
+    <ul class="list-group">
+      {% for stat, value in health_stats.items() %}
+      <li class="list-group-item">{{ stat }}: {{ value }}</li>
       {% endfor %}
     </ul>
     {% else %}
-    <p>
+    <p class="text-muted">
       No health stats found. Please
       <a href="/member/profile">update your profile</a>.
     </p>

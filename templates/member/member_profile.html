@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
 <div class="container mt-5">
   <h1>Member Profile</h1>
-  <form method="POST">
+  <form method="POST" action="/updateProfile">
     <div class="form-group">
       <label for="username">Username</label>
       <input
@@ -9,6 +9,7 @@
         class="form-control"
         id="username"
         name="username"
+        value="{{member[1]}}"
         required
       />
     </div>
@@ -19,6 +20,7 @@
         class="form-control"
         id="password"
         name="password"
+        value="{{member[2]}}"
         required
       />
     </div>
@@ -26,58 +28,34 @@
       <label for="exercises">Exercises</label>
       <div id="exercises">
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value="Exercise2"
-            id="exercise2"
-            name="exercises"
-          />
-          <label class="form-check-label" for="exercise2">Cardio</label>
+          <input class="form-check-input" type="checkbox" value="Cardio"
+          id="exercise1" name="exercises" {% if 'Cardio' in exercises
+          %}checked{% endif %} />
+          <label class="form-check-label" for="exercise1">Cardio</label>
         </div>
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value="Exercise2"
-            id="exercise2"
-            name="exercises"
-          />
+          <input class="form-check-input" type="checkbox" value="Pilates"
+          id="exercise2" name="exercises" {% if 'Pilates' in exercises
+          %}checked{% endif %} />
           <label class="form-check-label" for="exercise2">Pilates</label>
         </div>
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value="Exercise2"
-            id="exercise2"
-            name="exercises"
-          />
-          <label class="form-check-label" for="exercise2"
-            >Weight Training</label
-          >
+          <input class="form-check-input" type="checkbox" value="Weights"
+          id="exercise3" name="exercises" {% if 'Weights' in exercises
+          %}checked{% endif %} />
+          <label class="form-check-label" for="exercise3">Weights</label>
         </div>
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value="Exercise1"
-            id="exercise1"
-            name="exercises"
-          />
-          <label class="form-check-label" for="exercise1"
-            >Bodyweight Exercises</label
-          >
+          <input class="form-check-input" type="checkbox" value="Cross-fit"
+          id="exercise4" id="exercise1" name="exercises" {% if 'Cross-fit' in
+          exercises %}checked{% endif %} />
+          <label class="form-check-label" for="exercise4">Cross-fit</label>
         </div>
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value="Exercise2"
-            id="exercise2"
-            name="exercises"
-          />
-          <label class="form-check-label" for="exercise2">Cross-fit</label>
+          <input class="form-check-input" type="checkbox" value="Yoga"
+          id="exercise5" id="exercise5" name="exercises" {% if 'Yoga' in
+          exercises %}checked{% endif %} />
+          <label class="form-check-label" for="exercise5">Yoga</label>
         </div>
       </div>
     </div>
@@ -92,14 +70,49 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="achievements">Achievements</label>
+      <label for="achievements">Achievements (comma-separated)</label>
       <input
         type="text"
         class="form-control"
         id="achievements"
         name="achievements"
+        value="{{member[4]}}"
       />
     </div>
+    <div class="form-group">
+      <label for="weight">Weight (lbs)</label>
+      <input
+        type="number"
+        class="form-control"
+        id="weight"
+        name="weight"
+        required
+        value="{{health_stats[0]}}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="heart_rate">Heart Rate (bpm)</label>
+      <input
+        type="number"
+        class="form-control"
+        id="heart_rate"
+        name="heart_rate"
+        value="{{health_stats[1]}}"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="sleep">Average Hours of Sleep</label>
+      <input
+        type="number"
+        class="form-control"
+        id="sleep"
+        name="sleep"
+        value="{{health_stats[2]}}"
+        required
+      />
+    </div>
+    <a href="/member/dashboard" class="btn btn-secondary">Go Back</a>
     <button type="submit" class="btn btn-primary">Update Profile</button>
   </form>
 </div>
