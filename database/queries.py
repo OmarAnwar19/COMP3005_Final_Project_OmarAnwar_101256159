@@ -1,4 +1,4 @@
-from models import connect
+from database.db import connect
 
 
 def get_user_by_username(user_type, username):
