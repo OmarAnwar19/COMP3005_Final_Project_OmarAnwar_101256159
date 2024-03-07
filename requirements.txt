@@ -1,5 +1,4 @@
 flask
 pyqtwebengine
 pyqt5
-flask_sqlalchemy
 psycopg2-binary

@@ -1,6 +1,5 @@
 from flask import Flask, redirect, url_for, session, render_template
-from database.db import setup_db
-from database.keys import DB_KEY, SECRET
+from database.keys import SECRET
 
 from routes.auth import auth
 from routes.admin_view import admin_view
@@ -9,9 +8,6 @@ from routes.trainer_view import trainer_view
 
 app = Flask(__name__)
 app.secret_key = SECRET
-
-with app.app_context():
-    setup_db(app, DB_KEY)
     
 @app.route("/")
 def index():
@@ -36,6 +32,7 @@ app.register_blueprint(member_view)
 app.register_blueprint(trainer_view)
 
 
+# TODO: Password validation on update profile
 # TODO: Complete trainer dashboard and view
 # TODO: Complete admin dashboard and view
 # TODO: Refactor and organize code
