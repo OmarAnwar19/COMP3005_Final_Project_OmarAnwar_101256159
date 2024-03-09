@@ -48,7 +48,8 @@ CREATE TABLE IF NOT EXISTS Payments (
     session_id INTEGER REFERENCES Sessions(id),
     amount DECIMAL(10, 2) NOT NULL,
     payment_time TIME DEFAULT CURRENT_TIME,
-    processed BOOLEAN DEFAULT FALSE
+    processed BOOLEAN DEFAULT FALSE,
+    approved BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS Exercises (
