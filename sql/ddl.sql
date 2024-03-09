@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS Rooms (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     booked BOOLEAN DEFAULT FALSE
-);
+); 
 
 CREATE TABLE IF NOT EXISTS Equipment (
     id SERIAL PRIMARY KEY,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Sessions (
     member_id INTEGER REFERENCES Members(id),
     trainer_id INTEGER REFERENCES Trainers(id),
     room_id INTEGER REFERENCES Rooms(id),
-    session_time TIME DEFAULT CURRENT_TIME,
+    session_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP+INTERVAL '1 week',
     session_type VARCHAR(50) NOT NULL
 );
 
@@ -55,8 +55,7 @@ CREATE TABLE IF NOT EXISTS Payments (
 CREATE TABLE IF NOT EXISTS Exercises (
     id SERIAL PRIMARY KEY,
     member_id INTEGER REFERENCES Members(id),
-    exercise_name VARCHAR(50) NOT NULL,
-    exercise_time TIME DEFAULT CURRENT_TIME
+    exercise_name VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS HealthStats (

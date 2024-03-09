@@ -41,12 +41,12 @@ INSERT INTO Equipment (equipment_name, broken, maintenance_date) VALUES
 ('Weight Wolverine', FALSE, '2024-04-30');
 
 INSERT INTO Sessions (trainer_id, member_id, room_id, session_time, session_type) VALUES
-(1, 1, 1, '2022-12-01 10:00:00', 'Cardio'),
-(2, 2, 2, '2022-12-01 11:00:00', 'Pilates'),
-(3, 3, 3, '2022-12-01 12:00:00', 'Weights'),
-(4, 4, 4, '2022-12-01 13:00:00', 'Yoga'),
-(5, 5, 5, '2022-12-01 14:00:00', 'Cross-fit'),
-(1, 6, 6, '2022-12-01 15:00:00', 'Cardio');
+(1, 1, 1, '2024-01-15 09:30:00', 'Group Fitness'),
+(2, 2, 2, '2024-02-20 11:45:00', 'Personal Training'),
+(3, 3, 3, '2024-03-25 14:00:00', 'Group Fitness'),
+(4, 4, 4, '2024-04-30 16:15:00', 'Group Fitness'),
+(5, 5, 5, '2024-05-05 18:30:00', 'Personal Training'),
+(1, 6, 6, '2024-06-10 20:45:00', 'Personal Training');
 
 INSERT INTO Payments (amount, member_id, session_id, payment_time) VALUES
 (100, 1, 1, '2022-12-01 10:00:00'),
