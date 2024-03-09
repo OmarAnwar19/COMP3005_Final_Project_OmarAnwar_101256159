@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS Trainers (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
-    available_from TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    available_to TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+    available_from TIME DEFAULT CURRENT_TIME,
+    available_to TIME DEFAULT CURRENT_TIME
 );
 
 CREATE TABLE IF NOT EXISTS Administrators (
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS Sessions (
     member_id INTEGER REFERENCES Members(id),
     trainer_id INTEGER REFERENCES Trainers(id),
     room_id INTEGER REFERENCES Rooms(id),
-    session_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    session_time TIME DEFAULT CURRENT_TIME,
     session_type VARCHAR(50) NOT NULL
 );
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS Payments (
     member_id INTEGER REFERENCES Members(id),
     session_id INTEGER REFERENCES Sessions(id),
     amount DECIMAL(10, 2) NOT NULL,
-    payment_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    payment_time TIME DEFAULT CURRENT_TIME,
     processed BOOLEAN DEFAULT FALSE
 );
 
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS Exercises (
     id SERIAL PRIMARY KEY,
     member_id INTEGER REFERENCES Members(id),
     exercise_name VARCHAR(50) NOT NULL,
-    exercise_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+    exercise_time TIME DEFAULT CURRENT_TIME
 );
 
 CREATE TABLE IF NOT EXISTS HealthStats (

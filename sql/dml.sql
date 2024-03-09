@@ -7,12 +7,12 @@ INSERT INTO Members (username, password, fitness_goal, achievements) VALUES
 ('a', 'a', 'Win the lottery', 'Won the lottery');
 
 INSERT INTO Trainers (username, password, available_from, available_to) VALUES
-('TrainerAlex', 'password1', '2022-01-01 09:00:00', '2024-12-31 17:00:00'),
-('TrainerBeth', 'password2', '2022-01-01 09:00:00', '2024-12-31 17:00:00'),
-('TrainerCharlie', 'password3', '2022-01-01 17:00:00', '2024-12-31 24:00:00'),
-('TrainerDiana', 'password4', '2022-01-01 17:00:00', '2024-12-31 00:00:00'),
-('TrainerEthan', 'password5', '2022-01-01 00:00:00', '2024-12-31 09:00:00'),
-('TrainerKent', 'password6', '2022-01-01 00:00:00', '2024-12-31 09:00:00');
+('TrainerAlex', 'password1', '09:00:00', '17:00:00'),
+('TrainerBeth', 'password2', '09:00:00', '17:00:00'),
+('TrainerCharlie', 'password3', '17:00:00', '24:00:00'),
+('TrainerDiana', 'password4', '17:00:00', '00:00:00'),
+('TrainerEthan', 'password5', '00:00:00', '09:00:00'),
+('TrainerKent', 'password6', '00:00:00', '09:00:00');
 
 INSERT INTO Administrators (username, password) VALUES
 ('AdminAlex', 'password1'),
