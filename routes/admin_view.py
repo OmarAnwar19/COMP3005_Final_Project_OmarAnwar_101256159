@@ -27,6 +27,32 @@ def admin_dashboard():
     return render_template("admin/admin_dashboard.html", admin=username, sessions=sessions, members=members, trainers=trainers, equipment=equipment)
 
 
+@admin_view.route("/admin/manage/rooms")
+def manage_rooms():
+    bookings = get_room_bookings()
+    bookings = [{
+        "id": id, 
+        "name": room_name,
+        "booked": bool(booked),
+        "user_name": member if member is not None else 'N/A',
+        "session_time": format_datetime(date) if date is not None else 'N/A',
+        "session_type": s_type if s_type is not None else 'N/A',
+        "trainer_name": trainer if trainer is not None else 'N/A',
+        } for (id, room_name, booked, date, s_type, member, trainer) in bookings
+    ]
+    return render_template("admin/manage_rooms.html", rooms=bookings)
+
+
+@admin_view.route("/admin/manage/schedule")
+def manage_schedule():
+    return render_template("admin/manage_schedule.html")
+
+
+@admin_view.route("/admin/manage/payments")
+def manage_payments():
+    return render_template("admin/manage_payments.html")
+
+
 @admin_view.route("/admin/callMaintenance", methods=["POST"])
 def call_maintenance():
     if request.method == "POST":
@@ -41,7 +67,33 @@ def change_maintenance_date():
     if request.method == "POST":
         equipment_id = request.form.get("equipment_id")
         new_date = request.form.get("maintenance_date")
-        print(new_date)
         update_equipment_maintenance_date(equipment_id, new_date)
         flash("Maintenance date updated.", "info")
         return redirect(url_for("admin_view.admin_dashboard"))
+    
+
+@admin_view.route("/admin/addRoom", methods=["POST"])
+def add_room():
+    if request.method == "POST":
+        room_name = request.form.get("room_name")
+        add_room(room_name)
+        flash("Room added successfully!", "success")
+        return redirect(url_for("admin_view.admin_dashboard"))
+    
+
+@admin_view.route("/admin/deleteRoom", methods=["POST"])
+def delete_room_session():
+    if request.method == "POST":
+        room_id = request.form.get("room_id")
+        delete_room(room_id)
+        flash("Room deleted successfully!", "success")
+        return redirect(url_for("admin_view.manage_rooms"))
+
+
+@admin_view.route("/admin/unbookRoom", methods=["POST"])
+def unbook_room_session():
+    if request.method == "POST":
+        room_id = request.form.get("room_id")
+        unbook_room(room_id)
+        flash("Room unbooked successfully!", "success")
+        return redirect(url_for("admin_view.manage_rooms"))

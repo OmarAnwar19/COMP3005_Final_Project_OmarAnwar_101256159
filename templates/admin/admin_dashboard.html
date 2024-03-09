@@ -9,47 +9,29 @@
   {% include 'alerts.html' %}
 
   <div class="row mb-5">
-    <div class="col-md-5 mb-3">
-      <a class="btn btn-primary btn-block" href="/admin/manageSessions"
-        >Manage Sessions</a
+    <div class="col-md-6 mb-3">
+      <a class="btn btn-primary btn-block" href="/admin/manage/rooms"
+        >Room Management</a
       >
     </div>
-    <div class="col-md-5">
-      <a class="btn btn-primary btn-block" href="/admin/processPayments"
+    <div class="col-md-6">
+      <a class="btn btn-primary btn-block" href="/admin/manage/schedule"
+        >Schedule Management</a
+      >
+    </div>
+    <div class="col-md-6">
+      <a class="btn btn-primary btn-block" href="/admin/manage/payments"
         >Process Payments</a
       >
     </div>
-    <div class="col-md-2">
+    <div class="col-md-6">
       <button
         type="button"
         class="btn btn-primary btn-block"
         data-toggle="modal"
         data-target="#monitorEquipment"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-pc-display-horizontal"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M1.5 0A1.5 1.5 0 0 0 0 1.5v7A1.5 1.5 0 0 0 1.5 10H6v1H1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5v-1h4.5A1.5 1.5 0 0 0 16 8.5v-7A1.5 1.5 0 0 0 14.5 0zm0 1h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5M12 12.5a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0m2 0a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0M1.5 12h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1M1 14.25a.25.25 0 0 1 .25-.25h5.5a.25.25 0 1 1 0 .5h-5.5a.25.25 0 0 1-.25-.25"
-          />
-        </svg>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          fill="currentColor"
-          class="bi bi-bicycle"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M4 4.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1v.5h4.14l.386-1.158A.5.5 0 0 1 11 4h1a.5.5 0 0 1 0 1h-.64l-.311.935.807 1.29a3 3 0 1 1-.848.53l-.508-.812-2.076 3.322A.5.5 0 0 1 8 10.5H5.959a3 3 0 1 1-1.815-3.274L5 5.856V5h-.5a.5.5 0 0 1-.5-.5m1.5 2.443-.508.814c.5.444.85 1.054.967 1.743h1.139zM8 9.057 9.598 6.5H6.402zM4.937 9.5a2 2 0 0 0-.487-.877l-.548.877zM3.603 8.092A2 2 0 1 0 4.937 10.5H3a.5.5 0 0 1-.424-.765zm7.947.53a2 2 0 1 0 .848-.53l1.026 1.643a.5.5 0 1 1-.848.53z"
-          />
-        </svg>
+        Monitor Equipment
       </button>
     </div>
   </div>
@@ -62,7 +44,7 @@
         data-toggle="tab"
         href="#pills-sessions"
         role="tab"
-        >Upcoming Sessions</a
+        >Booked Sessions</a
       >
     </li>
     <li class="nav-item">
@@ -91,7 +73,7 @@
     <div class="tab-pane fade show active" id="pills-sessions" role="tabpanel">
       <div class="card mb-5">
         <div class="card-header">
-          <h2>Upcoming Sessions</h2>
+          <h2>Booked Sessions</h2>
         </div>
         <div class="card-body">
           {% if sessions %}
