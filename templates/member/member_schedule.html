@@ -3,7 +3,7 @@
 <div class="container mt-5 mb-5">
   <div class="card">
     <div class="card-body">
-      <h1 class="card-title mb-4">Member Schedule</h1>
+      <h1 class="card-header mb-5">Member Schedule</h1>
 
       {% include 'alerts.html' %}
 
@@ -14,7 +14,7 @@
             {% for session in sessions %}
             <li class="list-group-item d-flex justify-content-between">
               {{ session.info }}
-              <form method="POST" action="/cancelSession">
+              <form method="POST" action="/member/cancelSession">
                 <input
                   type="hidden"
                   name="session_id"
@@ -32,7 +32,7 @@
         <div class="card-body">
           <h2 class="card-title">Book a Session</h2>
           {% if trainers and rooms %}
-          <form method="POST" action="/bookSession">
+          <form method="POST" action="/member/bookSession">
             <div class="form-group">
               <label for="session_type">Session Type</label>
               <select

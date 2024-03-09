@@ -1,0 +1,129 @@
+<ul class="nav nav-tabs mb-4" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a
+      class="nav-link active"
+      id="pills-sessions-tab"
+      data-toggle="tab"
+      href="#pills-sessions"
+      role="tab"
+      >Schedule</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      id="pills-exercises-tab"
+      data-toggle="tab"
+      href="#pills-exercises"
+      role="tab"
+      >Exercises</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      id="pills-achievements-tab"
+      data-toggle="tab"
+      href="#pills-achievements"
+      role="tab"
+      >Achievements</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      id="pills-health-stats-tab"
+      data-toggle="tab"
+      href="#pills-health-stats"
+      role="tab"
+      >Health Stats</a
+    >
+  </li>
+</ul>
+
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-sessions" role="tabpanel">
+    <div class="card mb-5">
+      <div class="card-header">
+        <h2>Booked Sessions</h2>
+      </div>
+      <div class="card-body">
+        {% if sessions %}
+        <ul class="list-group">
+          {% for session in sessions %}
+          <li class="list-group-item">{{ session }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-muted">
+          No sessions found. {% if user_type == "member" %}
+          <a href="/member/schedule"> Please book a session</a>. {% endif %}
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="pills-exercises" role="tabpanel">
+    <div class="card mb-5">
+      <div class="card-header">
+        <h2>Exercises</h2>
+      </div>
+      <div class="card-body">
+        {% if exercises %}
+        <ul class="list-group">
+          {% for exercise in exercises %}
+          <li class="list-group-item">{{ exercise }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-muted">
+          No exercises found. {% if user_type == "member" %} Please
+          <a href="/member/profile">update your profile</a>.{% endif %}
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="pills-achievements" role="tabpanel">
+    <div class="card mb-5">
+      <div class="card-header">
+        <h2>Achievements</h2>
+      </div>
+      <div class="card-body">
+        {% if achievements %}
+        <ul class="list-group">
+          {% for achievement in achievements %}
+          <li class="list-group-item">{{ achievement }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-muted">
+          No achievements found. {% if user_type == "member" %} Please
+          <a href="/member/profile">update your profile</a>. {% endif %}
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="pills-health-stats" role="tabpanel">
+    <div class="card mb-5">
+      <div class="card-header">
+        <h2>Health Stats</h2>
+      </div>
+      <div class="card-body">
+        {% if health_stats %}
+        <ul class="list-group">
+          {% for stat, value in health_stats.items() %}
+          <li class="list-group-item">{{ stat }}: {{ value }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-muted">
+          No health stats found. {% if user_type == "member" %} Please
+          <a href="/member/profile">update your profile</a>. {% endif %}
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

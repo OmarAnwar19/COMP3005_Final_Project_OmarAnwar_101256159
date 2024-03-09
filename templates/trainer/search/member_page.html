@@ -1,0 +1,14 @@
+{% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
+
+<div class="container mt-5">
+  <div class="jumbotron text-center">
+    <h1 class="display-4">Member Profile: {{ member }}</h1>
+  </div>
+
+  {% include 'member/member_details.html' %}
+
+  <div class="form-group mt-5">
+    <a href="/trainer/search" class="btn btn-secondary">Go Back</a>
+  </div>
+</div>
+{% endblock %}

@@ -86,21 +86,18 @@ def member_schedule():
     return render_template("member/member_schedule.html", trainers=trainers, sessions=sessions, rooms=rooms)
 
 
-@member_view.route("/bookSession", methods=["POST"])
+@member_view.route("/member/bookSession", methods=["POST"])
 def book_session():
     if request.method == "POST":
         member_id = session.get("member_id")
         trainer_id = request.form.get("trainer_id")
         room_id = request.form.get("room_id")
-        session_time = datetime.strptime(request.form.get("session_time"), "%Y-%m-%dT%H:%M")
+        session_time = datetime.strptime(request.form.get("session_time"), "%Y-%m-%dT%H:%M").time()
         session_type = request.form.get("session_type")
 
         available_from, available_to = get_trainer_availability(trainer_id)[0]
-        available_from = available_from.replace(tzinfo=None)
-        available_to = available_to.replace(tzinfo=None)
 
         if not (available_from <= session_time <= available_to):
-            print("hit")
             flash("Trainer is not available at that time.", "danger")
             return redirect(url_for("member_view.member_schedule"))
 
@@ -111,7 +108,7 @@ def book_session():
         return redirect(url_for("member_view.member_dashboard"))
     
 
-@member_view.route("/cancelSession", methods=["POST"])
+@member_view.route("/member/cancelSession", methods=["POST"])
 def cancel_session():
     if request.method == "POST":
         session_id = request.form.get("session_id")
