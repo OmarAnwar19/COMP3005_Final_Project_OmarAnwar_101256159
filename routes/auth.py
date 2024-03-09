@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, session, Blueprint, flash
-from database.queries.member_queries import get_user_by_username, insert_user
+from database.queries.member_queries import get_member_by_username, insert_new_member
 from util.helpers import validate_password
 
 auth = Blueprint("auth", __name__)
@@ -11,7 +11,7 @@ def login():
         user_type = request.form.get("user_type")
         username = request.form.get("username")
         password = request.form.get("password")
-        user = get_user_by_username(user_type, username)
+        user = get_member_by_username(user_type, username)
 
         if user and user[2] == password: 
             session["username"] = username
@@ -34,7 +34,7 @@ def register():
         user_type = request.form.get("user_type")
         username = request.form.get("username")
         password = request.form.get("password")
-        user = get_user_by_username(user_type, username)
+        user = get_member_by_username(user_type, username)
         if user:
             flash(f"{user_type} {username} already exists.", "warning")
         elif not validate_password(password):
@@ -46,7 +46,7 @@ def register():
             active_minutes = 0
             distance_covered = 0
 
-            member_id = insert_user(user_type, username, password, workouts_completed, sessions_booked, calories_burned, active_minutes, distance_covered)
+            member_id = insert_new_member(user_type, username, password, workouts_completed, sessions_booked, calories_burned, active_minutes, distance_covered)
             flash(f"{user_type} {username} has been registered successfully", "success")
         return redirect(url_for("auth.register"))
     return render_template("auth/register.html")

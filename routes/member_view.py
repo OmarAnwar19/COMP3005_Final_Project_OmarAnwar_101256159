@@ -58,7 +58,7 @@ def update_profile():
         heart_rate = request.form.get("heart_rate")
         sleep = request.form.get("sleep")
 
-        user = get_user_by_username(user_type, username)
+        user = get_member_by_username(user_type, username)
         if user:
             flash(f"{user_type} {username} already exists.", "warning")
         elif not validate_password(password):
