@@ -49,8 +49,6 @@ app.register_blueprint(member_view)
 app.register_blueprint(trainer_view)
 
 
-# TODO: Complete admin dashboard and view
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--debug", action="store_true", help="Run in debug mode.")

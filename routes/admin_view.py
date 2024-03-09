@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, session, request, redirect, url_for, flash
 from database.queries.admin_queries import *
-from util.helpers import format_date, format_datetime
+from util.helpers import format_date, format_datetime, format_datetime_for_html
 
 admin_view = Blueprint("admin_view", __name__)
 
@@ -38,14 +38,24 @@ def manage_rooms():
         "session_time": format_datetime(date) if date is not None else 'N/A',
         "session_type": s_type if s_type is not None else 'N/A',
         "trainer_name": trainer if trainer is not None else 'N/A',
-        } for (id, room_name, booked, date, s_type, member, trainer) in bookings
+        } for (_, id, room_name, booked, date, s_type, member, trainer) in bookings
     ]
     return render_template("admin/manage_rooms.html", rooms=bookings)
 
 
 @admin_view.route("/admin/manage/schedule")
 def manage_schedule():
-    return render_template("admin/manage_schedule.html")
+    bookings = get_room_bookings()
+    bookings = [{
+        "id": id, 
+        "name": room_name,
+        "user_name": member if member is not None else 'N/A',
+        "session_time": format_datetime_for_html(date) if date is not None else 'N/A',
+        "session_type": s_type if s_type is not None else 'N/A',
+        "trainer_name": trainer if trainer is not None else 'N/A',
+        } for (id, _, room_name, booked, date, s_type, member, trainer) in bookings if booked
+    ]
+    return render_template("admin/manage_schedule.html", rooms=bookings)
 
 
 @admin_view.route("/admin/manage/payments")
@@ -90,10 +100,11 @@ def delete_room_session():
         return redirect(url_for("admin_view.manage_rooms"))
 
 
-@admin_view.route("/admin/unbookRoom", methods=["POST"])
-def unbook_room_session():
+@admin_view.route("/admin/updateSessionTime", methods=["POST"])
+def update_room_session_time():
     if request.method == "POST":
-        room_id = request.form.get("room_id")
-        unbook_room(room_id)
-        flash("Room unbooked successfully!", "success")
-        return redirect(url_for("admin_view.manage_rooms"))
+        session_id = request.form.get("session_id")
+        new_time = request.form.get("new_time")
+        update_session_time(session_id, new_time)
+        flash("Session time updated successfully!", "success")
+        return redirect(url_for("admin_view.manage_schedule"))

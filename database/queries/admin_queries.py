@@ -54,6 +54,14 @@ def update_equipment_maintenance_date(equipment_id, new_date):
     conn.close()
 
 
+def update_session_time(session_id, new_time):
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("UPDATE Sessions SET session_time = %s WHERE id = %s", (new_time, session_id))
+    conn.commit()
+    conn.close()
+
+
 def get_available_rooms():
     conn = connect()
     cur = conn.cursor()
@@ -104,7 +112,7 @@ def get_room_bookings():
     conn = connect()
     cur = conn.cursor()
     cur.execute("""
-        SELECT Rooms.*, Sessions.session_time, Sessions.session_type, Members.username AS member_name, Trainers.username AS trainer_name
+        SELECT Sessions.id, Rooms.*, Sessions.session_time, Sessions.session_type, Members.username AS member_name, Trainers.username AS trainer_name
         FROM Rooms
         LEFT JOIN Sessions ON Rooms.id = Sessions.room_id
         LEFT JOIN Members ON Sessions.member_id = Members.id

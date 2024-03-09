@@ -1,0 +1,46 @@
+{% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
+
+<div class="container mt-5 mb-5">
+  <div class="card">
+    <h1 class="card-header mb-4">Schedule Management</h1>
+    <div class="card-body">
+      {% include 'alerts.html' %} {% if rooms %}
+      <ul class="list-group mt-2">
+        {% for room in rooms %}
+        <li class="list-group-item">
+          <div>
+            <h5>{{ room.name }}</h5>
+            <p>Session Type: {{ room.session_type }}</p>
+            <p>Booked by: {{ room.user_name }}</p>
+            <p>Trainer: {{ room.trainer_name }}</p>
+            <form action="/admin/updateSessionTime" method="POST">
+              <label for="new_time">Session Time:</label>
+              <div class="d-flex">
+                <input type="hidden" name="session_id" value="{{ room.id }}" />
+                <input
+                  type="datetime-local"
+                  id="new_time"
+                  name="new_time"
+                  value="{{ room.session_time }}"
+                  class="flex-grow-1 mr-3"
+                />
+                <button type="submit" class="btn btn-primary btn-md">
+                  Update Time
+                </button>
+              </div>
+            </form>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="text-muted mt-0 mb-0">No sessions currently booked.</p>
+      {% endif %}
+
+      <div class="form-group mt-5">
+        <a href="/admin/dashboard" class="btn btn-secondary">Go Back</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

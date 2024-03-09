@@ -3,7 +3,7 @@
 <div class="container mt-5 mb-5">
   <div class="card">
     <div class="card-body">
-      <h1 class="card-header mb-4">Room Booking Management</h1>
+      <h1 class="card-header mb-4">Room Management</h1>
 
       {% include 'alerts.html' %}
 
@@ -28,7 +28,7 @@
             <h5>{{ room.name }}</h5>
             {% if room.booked %}
             <p>
-              Booked: {{ room.session_type }}, {{ room.user_name }} with {{
+              Session: {{ room.session_type }}, {{ room.user_name }} with {{
               room.trainer_name }} at {{ room.session_time }}
             </p>
             {% else %}

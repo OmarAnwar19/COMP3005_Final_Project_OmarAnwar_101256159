@@ -16,3 +16,7 @@ def format_datetime(date):
 
 def format_date(date):
     return date.strftime("%Y-%m-%d")
+
+
+def format_datetime_for_html(datetime_obj):
+    return datetime_obj.strftime("%Y-%m-%dT%H:%M")
