@@ -4,7 +4,7 @@ INSERT INTO Members (username, password, fitness_goal, achievements) VALUES
 ('RobertJohnson', 'password3', 'Improve stamina', 'Ran 100 miles'),
 ('MichaelWilliams', 'password', 'Increase flexibility', 'Won National Yoga Competition, Won International Yoga Competition'),
 ('SarahBrown', 'password5', 'Improve overall fitness', 'Won World Strongman Competition'),
-('a', 'a', 'Win the lottery', 'Won the lottery');
+('MichaelJordan', 'thegoat123', 'Win the lottery', 'Won the lottery');
 
 INSERT INTO Trainers (username, password, available_from, available_to) VALUES
 ('TrainerAlex', 'password1', '09:00:00', '17:00:00'),
@@ -33,12 +33,12 @@ INSERT INTO Rooms (name, booked) VALUES
 ('Iron Inn', FALSE),
 ('Jogging Jungle', FALSE);
 
-INSERT INTO Equipment (equipment_name, maintenance_due_date) VALUES
-('Treadmill Titan', '2022-12-31 00:00:00'),
-('Elliptical Eagle', '2022-12-31 00:00:00'),
-('Rowing Raptor', '2022-12-31 00:00:00'),
-('Bike Bison', '2022-12-31 00:00:00'),
-('Weight Wolverine', '2022-12-31 00:00:00');
+INSERT INTO Equipment (equipment_name, broken, maintenance_date) VALUES
+('Treadmill Titan', TRUE, '2024-12-31'),
+('Elliptical Eagle', TRUE, '2024-01-15'),
+('Rowing Raptor', FALSE, '2024-02-20'),
+('Bike Bison', FALSE, '2024-03-25'),
+('Weight Wolverine', FALSE, '2024-04-30');
 
 INSERT INTO Sessions (trainer_id, member_id, room_id, session_time, session_type) VALUES
 (1, 1, 1, '2022-12-01 10:00:00', 'Cardio'),
