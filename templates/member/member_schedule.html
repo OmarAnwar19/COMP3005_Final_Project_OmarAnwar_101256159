@@ -5,6 +5,8 @@
     <div class="card-body">
       <h1 class="card-title mb-4">Member Schedule</h1>
 
+      {% include 'alerts.html' %}
+
       <div class="card mb-4">
         <div class="card-body">
           <h2 class="card-title">Current Sessions</h2>
@@ -29,20 +31,21 @@
       <div class="card">
         <div class="card-body">
           <h2 class="card-title">Book a Session</h2>
+          {% if trainers and rooms %}
           <form method="POST" action="/bookSession">
             <div class="form-group">
-              <label for="trainer_id">Available Trainers</label>
+              <label for="session_type">Session Type</label>
               <select
                 class="form-control"
-                id="trainer_id"
-                name="trainer_id"
-                required
+                id="session_type"
+                name="session_type"
               >
-                {% for trainer in trainers %}
-                <option value="{{ trainer[0] }}">
-                  {{ trainer[0] }} ({{ trainer[1] }})
+                <option value="Group Fitness">
+                  Group Fitness ($60 / session)
                 </option>
-                {% endfor %}
+                <option value="Personal Training">
+                  Personal Training ($90 / session)
+                </option>
               </select>
             </div>
             <div class="form-group">
@@ -56,21 +59,49 @@
               />
             </div>
             <div class="form-group">
-              <label for="session_type">Session Type</label>
+              <label for="trainer_id">Available Trainers</label>
               <select
                 class="form-control"
-                id="session_type"
-                name="session_type"
+                id="trainer_id"
+                name="trainer_id"
+                required
               >
-                <option>Group Fitness</option>
-                <option>Personal Training</option>
+                {% for trainer in trainers %}
+                <option value="{{ trainer[0] }}">{{ trainer[1] }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="room_id">Available Rooms</label>
+              <select class="form-control" id="room_id" name="room_id" required>
+                {% for room in rooms %}
+                <option value="{{ room[0] }}">{{ room[1] }}</option>
+                {% endfor %}
               </select>
             </div>
             <div class="form-group mt-5">
               <a href="/member/dashboard" class="btn btn-secondary">Go Back</a>
-              <button type="submit" class="btn btn-primary">Book</button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                {%
+                if
+                not
+                trainers
+                or
+                not
+                rooms
+                %}disabled{%
+                endif
+                %}
+              >
+                Book
+              </button>
             </div>
           </form>
+          {% else %}
+          <p class="text-muted">No bookings available at this time.</p>
+          {% endif %}
         </div>
       </div>
     </div>

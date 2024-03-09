@@ -6,10 +6,7 @@
     <p class="lead">Welcome to the member dashboard.</p>
   </div>
 
-  {% with messages = get_flashed_messages(with_categories=true) %} {% if
-  messages %} {% for category, message in messages %}
-  <div class="alert alert-{{ category }}">{{ message }}</div>
-  {% endfor %} {% endif %} {% endwith %}
+  {% include 'alerts.html' %}
 
   <div class="row mb-5">
     <div class="col-md-6 mb-3">

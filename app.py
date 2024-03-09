@@ -1,3 +1,4 @@
+import argparse
 from flask import Flask, redirect, url_for, session, render_template
 from database.keys import SECRET
 
@@ -38,4 +39,7 @@ app.register_blueprint(trainer_view)
 # TODO: Refactor and organize code
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--debug", action="store_true", help="Run in debug mode.")
+    args = parser.parse_args()
+    app.run(debug=args.debug)

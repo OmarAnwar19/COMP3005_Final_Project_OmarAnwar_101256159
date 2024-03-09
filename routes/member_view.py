@@ -1,6 +1,7 @@
+from datetime import datetime
 from flask import render_template, Blueprint, request, redirect, url_for, flash, session
 from database.queries import *
-from util.helpers import format_date
+from util.helpers import format_date, validate_password
 
 member_view = Blueprint("member_view", __name__)
 
@@ -9,23 +10,24 @@ member_view = Blueprint("member_view", __name__)
 def member_dashboard():
     member_id = session.get("member_id") 
     username = session.get("username")
-    
     raw_sessions = get_member_sessions(member_id)
-    sessions = [f"{i+1}) {s_type} with {trainer} - {format_date(date)}" for i, (_, _, _, date, s_type, trainer) in enumerate(raw_sessions)]
-    
+    sessions = [
+        f"{i+1}) {s_type} with {trainer} in {room} - {format_date(date)}" 
+        for i, (_, _, _, _, date, s_type, trainer, room) in enumerate(raw_sessions)
+    ]
     raw_exercises = get_member_exercises(member_id)
-    exercises = [f"{i+1}) {name} - {format_date(date)}" for i, (_, _, name, date) in enumerate(raw_exercises)]
-
+    exercises = [
+        f"{i+1}) {name} - {format_date(date)}" 
+        for i, (_, _, name, date) in enumerate(raw_exercises)
+    ]
     raw_achievements = get_member_achievements(member_id)
     achievements = raw_achievements[0][0].split(",")
-
     raw_health_stats = get_member_health_stats(member_id)
     health_stats = {
         "Weight": f"{raw_health_stats[0][2]}lbs",
         "Heart Rate": f"{raw_health_stats[0][3]}bpm",
-        "Average Hours of Sleep": raw_health_stats[0][4],
+        "Avg. Nightly Sleep": f"{raw_health_stats[0][4]}hrs",
     }
-
     return render_template("member/member_dashboard.html", member=username, sessions=sessions, exercises=exercises, achievements=achievements, health_stats=health_stats)
 
 
@@ -38,15 +40,6 @@ def member_profile():
     health_stats = [raw_health_stats[0][2], raw_health_stats[0][3], raw_health_stats[0][4]]
     return render_template("member/member_profile.html", member=member, exercises=exercises, health_stats=health_stats)
     
-
-@member_view.route("/member/schedule")
-def member_schedule():
-    member_id = session.get("member_id") 
-    raw_sessions = get_member_sessions(member_id)
-    sessions = [{"id": id, "info": f"{i+1}) {s_type} with {trainer} - {format_date(date)}"} for i, (id, _, _, date, s_type, trainer) in enumerate(raw_sessions)]
-    trainers = get_available_trainers()
-    return render_template("member/member_schedule.html", trainers=trainers, sessions=sessions)
-
 
 @member_view.route("/updateProfile", methods=["POST"])
 def update_profile():
@@ -62,11 +55,32 @@ def update_profile():
         heart_rate = request.form.get("heart_rate")
         sleep = request.form.get("sleep")
 
-        update_user_profile(user_type, username, password, fitness_goal, achievements)
-        update_member_health_stats(member_id, weight, heart_rate, sleep)
-        update_member_exercises(member_id, exercises)
-        flash("Profile updated successfully!", "success")
-        return redirect(url_for("member_view.member_dashboard"))
+        user = get_user_by_username(user_type, username)
+        if user:
+            flash(f"{user_type} {username} already exists.", "warning")
+        elif not validate_password(password):
+            flash("Password must be at least 6 characters long, and contain a number and an uppercase letter.", "danger")
+        else:
+            update_user_profile(user_type, username, password, fitness_goal, achievements)
+            update_member_health_stats(member_id, weight, heart_rate, sleep)
+            update_member_exercises(member_id, exercises)
+            flash("Profile updated successfully!", "success")
+            return redirect(url_for("member_view.member_dashboard"))
+        return redirect(url_for("member_view.member_profile"))
+
+
+@member_view.route("/member/schedule")
+def member_schedule():
+    member_id = session.get("member_id") 
+    raw_sessions = get_member_sessions(member_id)
+    sessions = [{
+        "id": id, 
+        "info": f"{i+1}) {s_type} with {trainer} in {room} - {format_date(date)}"
+        } for i, (id, _, _, _, date, s_type, trainer, room) in enumerate(raw_sessions)
+    ]
+    trainers = get_available_trainers()
+    rooms = get_aviailable_rooms()
+    return render_template("member/member_schedule.html", trainers=trainers, sessions=sessions, rooms=rooms)
 
 
 @member_view.route("/bookSession", methods=["POST"])
@@ -74,11 +88,23 @@ def book_session():
     if request.method == "POST":
         member_id = session.get("member_id")
         trainer_id = request.form.get("trainer_id")
-        session_time = request.form.get("session_time")
+        room_id = request.form.get("room_id")
+        session_time = datetime.strptime(request.form.get("session_time"), "%Y-%m-%dT%H:%M")
         session_type = request.form.get("session_type")
 
-        book_new_session(member_id, trainer_id, session_time, session_type)
+        available_from, available_to = get_trainer_availability(trainer_id)[0]
+        available_from = available_from.replace(tzinfo=None)
+        available_to = available_to.replace(tzinfo=None)
+
+        if not (available_from <= session_time <= available_to):
+            print("hit")
+            flash("Trainer is not available at that time.", "danger")
+            return redirect(url_for("member_view.member_schedule"))
+
+        session_id = book_new_session(member_id, trainer_id, room_id, session_time, session_type)
+        make_session_payment(member_id, session_id, 90 if session_type == "Personal Training" else 60)
         flash("Session booked successfully!", "success")
+
         return redirect(url_for("member_view.member_dashboard"))
     
 
@@ -87,4 +113,5 @@ def cancel_session():
     if request.method == "POST":
         session_id = request.form.get("session_id")
         cancel_member_session(session_id)
+        flash("Session cancelled successfully!", "success")
         return redirect(url_for("member_view.member_schedule"))
