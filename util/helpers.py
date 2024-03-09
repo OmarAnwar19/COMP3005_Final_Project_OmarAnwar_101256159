@@ -10,5 +10,9 @@ def validate_password(password):
     return True
 
 
-def format_date(date):
+def format_datetime(date):
     return date.strftime("%B %d, %Y, %I:%M %p %Z")
+
+
+def format_date(date):
+    return date.strftime("%Y-%m-%d")

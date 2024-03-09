@@ -1,5 +1,231 @@
 {% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
-<div class="container">
-  <h1>Admin Dashboard</h1>
+
+<div class="container mt-5">
+  <div class="jumbotron text-center">
+    <h1 class="display-4">Hello, {{ admin }}!</h1>
+    <p class="lead">Welcome to the administrator dashboard.</p>
+  </div>
+
+  {% include 'alerts.html' %}
+
+  <div class="row mb-5">
+    <div class="col-md-5 mb-3">
+      <a class="btn btn-primary btn-block" href="/admin/manageSessions"
+        >Manage Sessions</a
+      >
+    </div>
+    <div class="col-md-5">
+      <a class="btn btn-primary btn-block" href="/admin/processPayments"
+        >Process Payments</a
+      >
+    </div>
+    <div class="col-md-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-block"
+        data-toggle="modal"
+        data-target="#monitorEquipment"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-pc-display-horizontal"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M1.5 0A1.5 1.5 0 0 0 0 1.5v7A1.5 1.5 0 0 0 1.5 10H6v1H1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5v-1h4.5A1.5 1.5 0 0 0 16 8.5v-7A1.5 1.5 0 0 0 14.5 0zm0 1h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5M12 12.5a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0m2 0a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0M1.5 12h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1M1 14.25a.25.25 0 0 1 .25-.25h5.5a.25.25 0 1 1 0 .5h-5.5a.25.25 0 0 1-.25-.25"
+          />
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          fill="currentColor"
+          class="bi bi-bicycle"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M4 4.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1v.5h4.14l.386-1.158A.5.5 0 0 1 11 4h1a.5.5 0 0 1 0 1h-.64l-.311.935.807 1.29a3 3 0 1 1-.848.53l-.508-.812-2.076 3.322A.5.5 0 0 1 8 10.5H5.959a3 3 0 1 1-1.815-3.274L5 5.856V5h-.5a.5.5 0 0 1-.5-.5m1.5 2.443-.508.814c.5.444.85 1.054.967 1.743h1.139zM8 9.057 9.598 6.5H6.402zM4.937 9.5a2 2 0 0 0-.487-.877l-.548.877zM3.603 8.092A2 2 0 1 0 4.937 10.5H3a.5.5 0 0 1-.424-.765zm7.947.53a2 2 0 1 0 .848-.53l1.026 1.643a.5.5 0 1 1-.848.53z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <ul class="nav nav-tabs mb-4" id="pills-tab" role="tablist">
+    <li class="nav-item">
+      <a
+        class="nav-link active"
+        id="pills-sessions-tab"
+        data-toggle="tab"
+        href="#pills-sessions"
+        role="tab"
+        >Upcoming Sessions</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="pills-exercises-tab"
+        data-toggle="tab"
+        href="#pills-members"
+        role="tab"
+        >View Members</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="pills-achievements-tab"
+        data-toggle="tab"
+        href="#pills-trainers"
+        role="tab"
+        >View Trainers</a
+      >
+    </li>
+  </ul>
+
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-sessions" role="tabpanel">
+      <div class="card mb-5">
+        <div class="card-header">
+          <h2>Upcoming Sessions</h2>
+        </div>
+        <div class="card-body">
+          {% if sessions %}
+          <ul class="list-group">
+            {% for session in sessions %}
+            <li class="list-group-item">{{ session }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="text-muted">No members found.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="pills-members" role="tabpanel">
+      <div class="card mb-5">
+        <div class="card-header">
+          <h2>Members</h2>
+        </div>
+        <div class="card-body">
+          {% if members %}
+          <ul class="list-group">
+            {% for member in members %}
+            <li class="list-group-item">{{ member }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="text-muted">No exercises found.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="pills-trainers" role="tabpanel">
+      <div class="card mb-5">
+        <div class="card-header">
+          <h2>Trainers</h2>
+        </div>
+        <div class="card-body">
+          {% if trainers %}
+          <ul class="list-group">
+            {% for trainer in trainers %}
+            <li class="list-group-item">{{ trainer }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="text-muted">No trainers found.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="monitorEquipment"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="monitorEquipmentLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="monitorEquipmentLabel">
+            Monitor Equipment
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          {% for item in equipment %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.name }}</h5>
+              <form
+                action="/admin/changeMaintenanceDate"
+                method="POST"
+                class="mb-2 mr-2"
+              >
+                <div class="row">
+                  <div class="col-12">
+                    <label for="maintenance-date">Maintenance Date:</label>
+                    <div class="d-flex">
+                      <input
+                        type="date"
+                        id="maintenance-date"
+                        name="maintenance_date"
+                        value="{{ item.maintenance_date }}"
+                        class="flex-grow-1"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12 mt-4">
+                    <p>Broken: {{ 'Yes' if item.broken else 'No' }}</p>
+                  </div>
+                  <div class="col-12 mt-2 d-flex">
+                    <form action="/admin/changeMaintenanceDate" method="POST">
+                      <input
+                        type="hidden"
+                        name="equipment_id"
+                        value="{{ item.id }}"
+                      />
+                      <button type="submit" class="btn btn-primary mr-3">
+                        Update Date
+                      </button>
+                    </form>
+                    {% if item.broken %}
+                    <form action="/admin/callMaintenance" method="POST">
+                      <input
+                        type="hidden"
+                        name="equipment_id"
+                        value="{{ item.id }}"
+                      />
+                      <button type="submit" class="btn btn-warning">
+                        Call for maintenance
+                      </button>
+                    </form>
+                    {% endif %}
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

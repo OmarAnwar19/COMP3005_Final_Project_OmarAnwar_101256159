@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import render_template, Blueprint, request, redirect, url_for, flash, session
-from util.helpers import format_date, validate_password
+from util.helpers import format_datetime, validate_password
 from database.queries.trainer_queries import get_available_trainers, get_trainer_availability
 from database.queries.admin_queries import get_available_rooms
 from database.queries.session_queries import book_new_session, make_session_payment, cancel_member_session
@@ -15,12 +15,12 @@ def member_dashboard():
     username = session.get("username")
     raw_sessions = get_member_sessions(member_id)
     sessions = [
-        f"{i+1}) {s_type} with {trainer} in {room} - {format_date(date)}" 
+        f"{i+1}) {s_type} with {trainer} in {room} - {format_datetime(date)}" 
         for i, (_, _, _, _, date, s_type, trainer, room) in enumerate(raw_sessions)
     ]
     raw_exercises = get_member_exercises(member_id)
     exercises = [
-        f"{i+1}) {name} - {format_date(date)}" 
+        f"{i+1}) {name} - {format_datetime(date)}" 
         for i, (_, _, name, date) in enumerate(raw_exercises)
     ]
     raw_achievements = get_member_achievements(member_id)
@@ -78,7 +78,7 @@ def member_schedule():
     raw_sessions = get_member_sessions(member_id)
     sessions = [{
         "id": id, 
-        "info": f"{i+1}) {s_type} with {trainer} in {room} - {format_date(date)}"
+        "info": f"{i+1}) {s_type} with {trainer} in {room} - {format_datetime(date)}"
         } for i, (id, _, _, _, date, s_type, trainer, room) in enumerate(raw_sessions)
     ]
     trainers = get_available_trainers()

@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, session, request, redirect, url_for, flash
 from database.queries.trainer_queries import *
 from database.queries.member_queries import get_member_sessions, get_member_exercises, get_member_achievements, get_member_health_stats, get_member_username
-from util.helpers import format_date
+from util.helpers import format_datetime
 
 trainer_view = Blueprint("trainer_view", __name__)
 
@@ -13,7 +13,7 @@ def trainer_dashboard():
     availability = get_trainer_availability(trainer_id)[0]
     raw_sessions = get_trainer_sessions(trainer_id)
     sessions = [
-        f"{i+1}) {s_type} with {trainer} in {room} - {format_date(date)}" 
+        f"{i+1}) {s_type} with {trainer} in {room} - {format_datetime(date)}" 
         for i, (_, _, _, _, date, s_type, trainer, room) in enumerate(raw_sessions)
     ]
     return render_template("trainer/trainer_dashboard.html", trainer=username, sessions=sessions, availability=availability)
@@ -29,12 +29,12 @@ def member_details(member_id):
     username = get_member_username(member_id)
     raw_sessions = get_member_sessions(member_id)
     sessions = [
-        f"{i+1}) {s_type} with {trainer} in {room} - {format_date(date)}" 
+        f"{i+1}) {s_type} with {trainer} in {room} - {format_datetime(date)}" 
         for i, (_, _, _, _, date, s_type, trainer, room) in enumerate(raw_sessions)
     ]
     raw_exercises = get_member_exercises(member_id)
     exercises = [
-        f"{i+1}) {name} - {format_date(date)}" 
+        f"{i+1}) {name} - {format_datetime(date)}" 
         for i, (_, _, name, date) in enumerate(raw_exercises)
     ]
     raw_achievements = get_member_achievements(member_id)
