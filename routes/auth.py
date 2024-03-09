@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, session, Blueprint, flash
-from database.queries import get_user_by_username, insert_user
+from database.queries.member_queries import get_user_by_username, insert_user
 from util.helpers import validate_password
 
 auth = Blueprint("auth", __name__)

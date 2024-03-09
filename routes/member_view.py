@@ -1,7 +1,10 @@
 from datetime import datetime
 from flask import render_template, Blueprint, request, redirect, url_for, flash, session
-from database.queries import *
 from util.helpers import format_date, validate_password
+from database.queries.trainer_queries import get_available_trainers, get_trainer_availability
+from database.queries.admin_queries import get_available_rooms
+from database.queries.session_queries import book_new_session, make_session_payment, cancel_member_session
+from database.queries.member_queries import *
 
 member_view = Blueprint("member_view", __name__)
 
@@ -61,7 +64,7 @@ def update_profile():
         elif not validate_password(password):
             flash("Password must be at least 6 characters long, and contain a number and an uppercase letter.", "danger")
         else:
-            update_user_profile(user_type, username, password, fitness_goal, achievements)
+            update_member_profile(user_type, username, password, fitness_goal, achievements)
             update_member_health_stats(member_id, weight, heart_rate, sleep)
             update_member_exercises(member_id, exercises)
             flash("Profile updated successfully!", "success")
@@ -79,7 +82,7 @@ def member_schedule():
         } for i, (id, _, _, _, date, s_type, trainer, room) in enumerate(raw_sessions)
     ]
     trainers = get_available_trainers()
-    rooms = get_aviailable_rooms()
+    rooms = get_available_rooms()
     return render_template("member/member_schedule.html", trainers=trainers, sessions=sessions, rooms=rooms)
 
 
