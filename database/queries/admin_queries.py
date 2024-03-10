@@ -62,6 +62,22 @@ def update_session_time(session_id, new_time):
     conn.close()
 
 
+def approve_payment(payment_id):
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("UPDATE Payments SET processed = TRUE, approved = TRUE WHERE id = %s", (payment_id,))
+    conn.commit()
+    conn.close()
+
+
+def reject_payment(payment_id):
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("UPDATE Payments SET processed = TRUE, approved = FALSE WHERE id = %s", (payment_id,))
+    conn.commit()
+    conn.close()
+
+
 def get_available_rooms():
     conn = connect()
     cur = conn.cursor()
@@ -91,6 +107,21 @@ def get_all_equipment():
     equipment = cur.fetchall()
     conn.close()
     return equipment
+
+
+def get_all_payments():
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT Payments.*, Members.username AS member_name, Trainers.username AS trainer_name, Sessions.session_type 
+        FROM Payments 
+        INNER JOIN Members ON Payments.member_id = Members.id
+        INNER JOIN Sessions ON Payments.session_id = Sessions.id
+        INNER JOIN Trainers ON Sessions.trainer_id = Trainers.id;
+    """)
+    payments = cur.fetchall()
+    conn.close()
+    return payments
 
 
 def get_admin_sessions():

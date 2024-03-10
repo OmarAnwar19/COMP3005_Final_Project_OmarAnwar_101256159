@@ -102,8 +102,9 @@ def book_session():
             return redirect(url_for("member_view.member_schedule"))
 
         session_id = book_new_session(member_id, trainer_id, room_id, session_time, session_type)
-        make_session_payment(member_id, session_id, 90 if session_type == "Personal Training" else 60)
         flash("Session booked successfully!", "success")
+        make_session_payment(member_id, session_id, 120 if session_type == "Personal Training" else 90)
+        flash("Payment pending processing.", "info")
 
         return redirect(url_for("member_view.member_dashboard"))
     

@@ -60,7 +60,22 @@ def manage_schedule():
 
 @admin_view.route("/admin/manage/payments")
 def manage_payments():
-    return render_template("admin/manage_payments.html")
+    raw_payments = get_all_payments()
+    payments = [{
+        "id": id, 
+        "payment_date": format_datetime(date),
+        "amount": amount,
+        "processed": bool(processed),
+        "approved": bool(approved),
+        "member_name": member,
+        "trainer_name": trainer,
+        "session_type": s_type
+        } for (id, _, _, amount, date, processed, approved, member, trainer, s_type) in raw_payments
+    ]
+    unprocessed = [p for p in payments if not p["processed"]]
+    approved = [p for p in payments if p["processed"] and p["approved"]]
+    rejected = [p for p in payments if p["processed"] and not p["approved"]]
+    return render_template("admin/manage_payments.html", unprocessed_payments=unprocessed, approved_payments=approved, rejected_payments=rejected)
 
 
 @admin_view.route("/admin/callMaintenance", methods=["POST"])
@@ -108,3 +123,17 @@ def update_room_session_time():
         update_session_time(session_id, new_time)
         flash("Session time updated successfully!", "success")
         return redirect(url_for("admin_view.manage_schedule"))
+
+
+@admin_view.route('/admin/approvePayment/<int:payment_id>', methods=['POST'])
+def handle_approve_payment(payment_id):
+    approve_payment(payment_id)
+    flash("Payment approved successfully!", "success")
+    return redirect(url_for("admin_view.manage_payments"))
+
+
+@admin_view.route('/admin/rejectPayment/<int:payment_id>', methods=['POST'])
+def handle_reject_payment(payment_id):
+    reject_payment(payment_id)
+    flash("Payment rejected successfully!", "success")
+    return redirect(url_for("admin_view.manage_payments"))

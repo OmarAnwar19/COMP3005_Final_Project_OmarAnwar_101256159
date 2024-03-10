@@ -1,4 +1,4 @@
-SECRET = "loremipsumdolorsitamet1234567890"
+SECRET = "loremipsumdolorsitamet12345678120"
 
 DB_KEY = 'postgresql://postgres:postgres@localhost:5432/FinalProject'
 

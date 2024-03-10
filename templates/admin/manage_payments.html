@@ -1,0 +1,129 @@
+{% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
+
+<div class="container mt-5 mb-5">
+  <div class="card">
+    <h1 class="card-header mb-4">Process Payments</h1>
+    <div class="card-body">
+      {% include 'alerts.html' %}
+
+      <ul class="nav nav-tabs mb-4" id="pills-tab" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="pills-unprocessed-tab"
+            data-toggle="tab"
+            href="#pills-unprocessed"
+            role="tab"
+            >Unprocessed</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="pills-approved-tab"
+            data-toggle="tab"
+            href="#pills-approved"
+            role="tab"
+            >Approved</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="pills-rejected-tab"
+            data-toggle="tab"
+            href="#pills-rejected"
+            role="tab"
+            >Rejected</a
+          >
+        </li>
+      </ul>
+
+      <div class="tab-content" id="pills-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="pills-unprocessed"
+          role="tabpanel"
+        >
+          {% if unprocessed_payments %}
+          <ul class="list-group">
+            {% for payment in unprocessed_payments %}
+            <li class="list-group-item">
+              <h5>${{ payment.amount }} from {{ payment.member_name }}</h5>
+              <p>
+                Session: {{ payment.session_type }} with {{ payment.trainer_name
+                }}
+              </p>
+              <p>Payment Time: {{ payment.payment_date }}</p>
+              <div class="mt-2 d-flex">
+                <form
+                  action="/admin/approvePayment/{{ payment.id }}"
+                  method="post"
+                >
+                  <input
+                    type="submit"
+                    value="Approve"
+                    class="btn btn-success mr-3"
+                  />
+                </form>
+                <form
+                  action="/admin/rejectPayment/{{ payment.id }}"
+                  method="post"
+                >
+                  <input type="submit" value="Reject" class="btn btn-danger" />
+                </form>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="text-muted">No unprocessed payments found.</p>
+          {% endif %}
+        </div>
+
+        <div class="tab-pane fade" id="pills-approved" role="tabpanel">
+          {% if approved_payments %}
+          <ul class="list-group">
+            {% for payment in approved_payments %}
+            <li class="list-group-item">
+              <h5>${{ payment.amount }} from {{ payment.member_name }}</h5>
+              <p>
+                Session: {{ payment.session_type }} with {{ payment.trainer_name
+                }}
+              </p>
+              <p>Payment Time: {{ payment.payment_date }}</p>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="text-muted">No approved payments found.</p>
+          {% endif %}
+        </div>
+
+        <div class="tab-pane fade" id="pills-rejected" role="tabpanel">
+          {% if rejected_payments %}
+          <ul class="list-group">
+            {% for payment in rejected_payments %}
+            <li class="list-group-item">
+              <h5>${{ payment.amount }} from {{ payment.member_name }}</h5>
+              <p>
+                Session: {{ payment.session_type }} with {{ payment.trainer_name
+                }}
+              </p>
+              <p>Payment Time: {{ payment.payment_date }}</p>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="text-muted">No rejected payments found.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="form-group mt-5">
+        <a href="/admin/dashboard" class="btn btn-secondary">Go Back</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
