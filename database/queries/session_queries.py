@@ -6,6 +6,7 @@ def book_new_session(member_id, trainer_id, room_id, session_time, session_type)
     cur = conn.cursor()
     cur.execute("INSERT INTO Sessions (member_id, trainer_id, room_id, session_time, session_type) VALUES (%s, %s, %s, %s, %s) RETURNING id", (member_id, trainer_id, room_id, session_time, session_type,))
     session_id = cur.fetchone()[0]
+    cur.execute("UPDATE Rooms SET booked = TRUE WHERE id = %s", (room_id,))
     conn.commit()
     cur.close()
     conn.close()

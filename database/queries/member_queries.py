@@ -63,6 +63,24 @@ def get_member_username(member_id):
     return username
 
 
+def get_trainer_username(trainer_id):
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT username FROM Trainers WHERE id = %s", (trainer_id,))
+    username = cur.fetchone()[0]
+    conn.close()
+    return username
+
+
+def get_room_name(room_id):
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT name FROM Rooms WHERE id = %s", (room_id,))
+    room_name = cur.fetchone()[0]
+    conn.close()
+    return room_name
+
+
 def get_member_by_username(user_type, username):
     conn = connect()
     cur = conn.cursor()

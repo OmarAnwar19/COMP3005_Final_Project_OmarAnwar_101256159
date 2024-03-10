@@ -9,7 +9,7 @@ INSERT INTO Members (username, password, fitness_goal, achievements) VALUES
 INSERT INTO Trainers (username, password, available_from, available_to) VALUES
 ('TrainerAlex', 'password1', '09:00:00', '17:00:00'),
 ('TrainerBeth', 'password2', '09:00:00', '17:00:00'),
-('TrainerCharlie', 'password3', '17:00:00', '24:00:00'),
+('TrainerCharlie', 'password3', '17:00:00', '00:00:00'),
 ('TrainerDiana', 'password4', '17:00:00', '00:00:00'),
 ('TrainerEthan', 'password5', '00:00:00', '09:00:00'),
 ('TrainerKent', 'password6', '00:00:00', '09:00:00');

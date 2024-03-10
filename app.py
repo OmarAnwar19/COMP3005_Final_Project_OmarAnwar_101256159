@@ -9,7 +9,7 @@ from routes.trainer_view import trainer_view
 
 app = Flask(__name__)
 app.secret_key = SECRET
-    
+
 
 @app.before_request
 def restrict_access_based_on_role():

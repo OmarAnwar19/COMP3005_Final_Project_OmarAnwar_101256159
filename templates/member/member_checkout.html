@@ -1,0 +1,47 @@
+{% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
+
+<div class="container mt-5 mb-5">
+  <div class="card">
+    <div class="card-body">
+      <h1 class="card-header mb-5">Checkout</h1>
+
+      {% include 'alerts.html' %}
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">Cart Items</h2>
+          {% if sessions %}
+          <ul class="list-group">
+            {% for session in sessions %}
+            <li class="list-group-item d-flex justify-content-between">
+              {{ session.info }}
+              <form method="POST" action="/member/removeFromCart">
+                <input
+                  type="hidden"
+                  name="booking_id"
+                  value="{{ session.id }}"
+                />
+                <button type="submit" class="btn btn-danger btn-sm">X</button>
+              </form>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="text-muted">
+            You do not have any items in your cart.
+            <a href="/member/schedule">Book a session.</a>
+          </p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="d-flex">
+        <a href="/member/schedule" class="btn btn-secondary mr-3">Go Back</a>
+        <form action="/member/confirmCheckout" method="POST">
+          <button type="submit" class="btn btn-success">Checkout</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
