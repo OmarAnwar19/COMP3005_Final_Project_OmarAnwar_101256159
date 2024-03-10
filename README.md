@@ -54,6 +54,17 @@ The application is structured as follows:
 
 The database consists of several tables representing entities such as members, trainers, and administrative staff. Relationships between these entities are represented as foreign keys in the tables. The database design is based on the requirements specified in the project spec. ER and Relational diagrams are included with the project report included along with my submission.
 
+### Bonus Features
+
+- **User Authentication**: The application uses a secure authentication system to ensure that only authorized users can access the system. Passwords are stored securely in the database.
+- **Role-Based Access Control**: The application uses role-based access control to ensure that users can only access the features that are relevant to their role. For example, members can only view their own dashboard, while administrative staff can view and manage all members and trainers.
+- **Web Application**: The application is a web application built with Flask, which allows users to access it from any device with a web browser. This was quite a time-consuming task, but means that the application is more accessible and easier to use than a command-line application.
+- **Responsive Design**: The application uses responsive design to ensure that it looks good and is easy to use on any device, including desktops, tablets, and smartphones.
+- **Data Validation**: The application uses data validation to ensure that users enter valid data when registering, updating their profile, or making bookings. This helps to prevent errors and ensure that the data in the database is accurate.
+- **Error Handling**: The application uses error handling to ensure that users receive helpful error messages when something goes wrong. This helps to prevent frustration and confusion when using the application.
+- **Session Management**: The application uses session management to ensure that users remain logged in as they navigate the application. This means that users don't have to log in every time they visit a new page, which makes the application more convenient to use.
+- **Additional User Functions**: The application includes additional user functions which are not required by the project spec, such as increased administrative staff functions, and the ability for members to modify their cart for bookings.
+
 ## Running the Application
 
 ### Prerequisites
