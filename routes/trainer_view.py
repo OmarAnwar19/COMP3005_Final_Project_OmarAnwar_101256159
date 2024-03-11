@@ -2,6 +2,7 @@ from flask import render_template, Blueprint, session, request, redirect, url_fo
 # importing all the queries from the database.queries package that we need for the trainer view
 from database.queries.trainer_queries import *
 from database.queries.member_queries import get_member_sessions, get_member_exercises, get_member_achievements, get_member_health_stats, get_member_username
+# importing the format_datetime function from the util.helpers package
 from util.helpers import format_datetime
 
 # creating a blueprint for the trainer view
