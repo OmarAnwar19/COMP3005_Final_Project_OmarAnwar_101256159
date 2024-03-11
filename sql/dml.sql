@@ -1,3 +1,5 @@
+-- This file contains the DML for the database. It populates the all the tables with sample data.
+
 INSERT INTO Members (username, password, fitness_goal, achievements) VALUES
 ('JohnDoe', 'password1', 'Lose weight', 'Won State Derby'),
 ('JaneSmith', 'password2', 'Gain muscle', 'Climbed Everest'),

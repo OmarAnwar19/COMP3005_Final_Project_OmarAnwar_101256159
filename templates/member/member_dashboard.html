@@ -1,3 +1,8 @@
+<!-- 
+  This is the member dashboard page of the application. It provides the member with options 
+  to manage their schedule and update their profile. It also displays the member details, exercises,
+  and achievements, and allows them to monitor their book sessions and health stats.
+-->
 {% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
 
 <div class="container mt-5">
@@ -6,8 +11,14 @@
     <p class="lead">Welcome to the member dashboard.</p>
   </div>
 
+  <!-- 
+    This section includes any alerts that need to be displayed to the member.
+  -->
   {% include 'alerts.html' %}
 
+  <!-- 
+    This section provides the member with options to manage their schedule and update their profile. Each option is represented by a button.
+  -->
   <div class="row mb-5">
     <div class="col-md-6 mb-3">
       <a class="btn btn-primary btn-block" href="/member/schedule"
@@ -21,6 +32,9 @@
     </div>
   </div>
 
+  <!-- 
+    This section includes the member details. The details are included from a separate HTML file.
+  -->
   {% include 'member/member_details.html' %}
 </div>
 {% endblock %}

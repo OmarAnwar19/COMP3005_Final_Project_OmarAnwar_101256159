@@ -1,4 +1,9 @@
-{% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
+<!-- 
+  This is the administrator dashboard page of the application. It displays a welcome message to the admin, 
+  allows the admin to manage rooms, manage schedule, process payments, monitor equipment, view booked sessions, 
+  view members, and view trainers. 
+-->
+{% extends "layout.html" %} {% block content %}
 
 <div class="container mt-5">
   <div class="jumbotron text-center">
@@ -6,9 +11,18 @@
     <p class="lead">Welcome to the administrator dashboard.</p>
   </div>
 
+  <!-- 
+    This section includes any alerts that need to be displayed to the admin.
+  -->
   {% include 'alerts.html' %}
 
+  <!-- 
+    This section contains buttons for room management, schedule management, payment processing, and equipment monitoring. 
+  -->
   <div class="row mb-5">
+    <!-- 
+      Each button redirects the admin to the respective management page.
+    -->
     <div class="col-md-6 mb-3">
       <a class="btn btn-primary btn-block" href="/admin/manage/rooms"
         >Room Management</a
@@ -25,6 +39,10 @@
       >
     </div>
     <div class="col-md-6">
+      <!-- 
+        The Monitor Equipment button opens a modal that allows the admin to monitor the equipment.
+        It is implemented using the Bootstrap modal component, and the modal is triggered by a button click.
+      -->
       <button
         type="button"
         class="btn btn-primary btn-block"
@@ -36,7 +54,14 @@
     </div>
   </div>
 
+  <!-- 
+    This section contains tabs for booked sessions, members, and trainers. 
+  -->
   <ul class="nav nav-tabs mb-4" id="pills-tab" role="tablist">
+    <!-- 
+      Each tab displays a list of the respective items. If there are no items, 
+      a message is displayed indicating that no items were found.
+    -->
     <li class="nav-item">
       <a
         class="nav-link active"
@@ -69,7 +94,14 @@
     </li>
   </ul>
 
+  <!-- 
+    This is the content of the tabs. Each tab contains a list of the respective items. 
+  -->
   <div class="tab-content" id="pills-tabContent">
+    <!-- 
+      This is the content of the Booked Sessions tab. It displays a list of booked sessions. 
+      If there are no booked sessions, a message is displayed indicating that no sessions were found.
+    -->
     <div class="tab-pane fade show active" id="pills-sessions" role="tabpanel">
       <div class="card mb-5">
         <div class="card-header">
@@ -88,6 +120,10 @@
         </div>
       </div>
     </div>
+    <!-- 
+      This is the content of the Members tab. It displays a list of members. 
+      If there are no members, a message is displayed indicating that no members were found.
+    -->
     <div class="tab-pane fade" id="pills-members" role="tabpanel">
       <div class="card mb-5">
         <div class="card-header">
@@ -106,6 +142,10 @@
         </div>
       </div>
     </div>
+    <!-- 
+      This is the content of the Trainers tab. It displays a list of trainers. 
+      If there are no trainers, a message is displayed indicating that no trainers were found.
+    -->
     <div class="tab-pane fade" id="pills-trainers" role="tabpanel">
       <div class="card mb-5">
         <div class="card-header">
@@ -124,90 +164,103 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <div
-    class="modal fade"
-    id="monitorEquipment"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="monitorEquipmentLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="monitorEquipmentLabel">
-            Monitor Equipment
-          </h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+    <!-- 
+      This is the Monitor Equipment modal. It is triggered by a button click and allows the admin to monitor the equipment.
+    -->
+    <div
+      class="modal fade"
+      id="monitorEquipment"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="monitorEquipmentLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="monitorEquipmentLabel">
+              Monitor Equipment
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
 
-        <div class="modal-body">
-          {% for item in equipment %}
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ item.name }}</h5>
-              <form
-                action="/admin/changeMaintenanceDate"
-                method="POST"
-                class="mb-2 mr-2"
-              >
-                <div class="row">
-                  <div class="col-12">
-                    <label for="maintenance-date">Maintenance Date:</label>
-                    <div class="d-flex">
-                      <input
-                        type="date"
-                        id="maintenance-date"
-                        name="maintenance_date"
-                        value="{{ item.maintenance_date }}"
-                        class="flex-grow-1"
-                      />
+          <!-- 
+            This is the content of the modal. It displays a list of equipment. 
+            For each piece of equipment, the admin can update the maintenance date and call for maintenance if the equipment is broken.
+          -->
+          <div class="modal-body">
+            {% for item in equipment %}
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">{{ item.name }}</h5>
+                <form
+                  action="/admin/changeMaintenanceDate"
+                  method="POST"
+                  class="mb-2 mr-2"
+                >
+                  <div class="row">
+                    <div class="col-12">
+                      <label for="maintenance-date">Maintenance Date:</label>
+                      <div class="d-flex">
+                        <input
+                          type="date"
+                          id="maintenance-date"
+                          name="maintenance_date"
+                          value="{{ item.maintenance_date }}"
+                          class="flex-grow-1"
+                        />
+                      </div>
+                    </div>
+                    <!-- 
+                      The admin can update the maintenance date for the equipment.
+                     -->
+                    <div class="col-12 mt-4">
+                      <p>Broken: {{ 'Yes' if item.broken else 'No' }}</p>
+                    </div>
+                    <div class="col-12 mt-2 d-flex">
+                      <form action="/admin/changeMaintenanceDate" method="POST">
+                        <input
+                          type="hidden"
+                          name="equipment_id"
+                          value="{{ item.id }}"
+                        />
+                        <button type="submit" class="btn btn-primary mr-3">
+                          Update Date
+                        </button>
+                      </form>
+                      <!--
+                        If the equipment is broken, the admin can call for maintenance.
+                      -->
+                      {% if item.broken %}
+                      <form action="/admin/callMaintenance" method="POST">
+                        <input
+                          type="hidden"
+                          name="equipment_id"
+                          value="{{ item.id }}"
+                        />
+                        <button type="submit" class="btn btn-warning">
+                          Call for maintenance
+                        </button>
+                      </form>
+                      {% endif %}
                     </div>
                   </div>
-                  <div class="col-12 mt-4">
-                    <p>Broken: {{ 'Yes' if item.broken else 'No' }}</p>
-                  </div>
-                  <div class="col-12 mt-2 d-flex">
-                    <form action="/admin/changeMaintenanceDate" method="POST">
-                      <input
-                        type="hidden"
-                        name="equipment_id"
-                        value="{{ item.id }}"
-                      />
-                      <button type="submit" class="btn btn-primary mr-3">
-                        Update Date
-                      </button>
-                    </form>
-                    {% if item.broken %}
-                    <form action="/admin/callMaintenance" method="POST">
-                      <input
-                        type="hidden"
-                        name="equipment_id"
-                        value="{{ item.id }}"
-                      />
-                      <button type="submit" class="btn btn-warning">
-                        Call for maintenance
-                      </button>
-                    </form>
-                    {% endif %}
-                  </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
       </div>
     </div>
+    {% endblock %}
   </div>
 </div>
-{% endblock %}

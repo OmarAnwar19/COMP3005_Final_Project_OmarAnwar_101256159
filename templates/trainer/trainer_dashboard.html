@@ -1,4 +1,8 @@
-{% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
+<!-- 
+  This is the trainer dashboard page of the application. It displays a welcome message to the trainer, 
+  allows the trainer to update their availability, search for members, and view upcoming sessions. 
+-->
+{% extends "layout.html" %} {% block content %}
 
 <div class="container mt-5">
   <div class="jumbotron text-center">
@@ -6,10 +10,20 @@
     <p class="lead">Welcome to the trainer dashboard.</p>
   </div>
 
+  <!-- 
+    This section includes any alerts that need to be displayed to the trainer.
+  -->
   {% include 'alerts.html' %}
 
+  <!-- 
+    This section contains buttons for updating availability and searching for members. 
+  -->
   <div class="row mb-5">
     <div class="col-md-6 mb-3">
+      <!-- 
+        The Update Availability button opens a modal that allows the trainer to update their availability.
+        It is implemented using the Bootstrap modal component, and the modal is triggered by a button click.
+      -->
       <button
         type="button"
         class="btn btn-primary btn-block"
@@ -26,6 +40,9 @@
     </div>
   </div>
 
+  <!-- 
+    This is the modal for updating availability. It contains a form that allows the trainer to update their availability.
+  -->
   <div
     class="modal fade"
     id="scheduleModal"
@@ -71,6 +88,9 @@
             </div>
           </div>
 
+          <!-- 
+            This form allows the trainer to update their availability.
+          -->
           <form action="/trainer/updateSchedule" method="POST">
             <h6 class="mt-5">New Availability (from - to):</h6>
             <div class="row justify-content-center">
@@ -111,6 +131,10 @@
     </div>
   </div>
 
+  <!-- 
+    This section displays the trainer's upcoming sessions in a card. If there are no upcoming sessions, 
+    a message is displayed indicating that no sessions were found.
+  -->
   <div class="card mb-5">
     <div class="card-header">
       <h2>Upcoming Sessions</h2>

@@ -1,3 +1,6 @@
+<!-- 
+  This is the member profile page of the application. It displays the details of a specific member. 
+-->
 {% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
 
 <div class="container mt-5">
@@ -5,8 +8,14 @@
     <h1 class="display-4">Member Profile: {{ member }}</h1>
   </div>
 
+  <!-- 
+    This section includes the member details. The details are included from a separate HTML file.
+  -->
   {% include 'member/member_details.html' %}
 
+  <!-- 
+    This button allows the trainer to return to the member search page.
+  -->
   <div class="form-group mt-5">
     <a href="/trainer/search" class="btn btn-secondary">Go Back</a>
   </div>

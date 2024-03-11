@@ -1,10 +1,22 @@
+<!-- 
+  This is the Schedule Management page of the application. It allows the admin to view and 
+  manage the schedule of rooms and modify the session time for each room.
+-->
 {% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
 
 <div class="container mt-5 mb-5">
   <div class="card">
     <h1 class="card-header mb-4">Schedule Management</h1>
     <div class="card-body">
-      {% include 'alerts.html' %} {% if rooms %}
+      <!-- 
+        This section includes any alerts that need to be displayed to the admin.
+      -->
+      {% include 'alerts.html' %}
+      <!-- 
+        This section displays a list of rooms. For each room, it displays the room name, session type, 
+        who it's booked by, the trainer, and allows the admin to update the session time.
+      -->
+      {% if rooms %}
       <ul class="list-group mt-2">
         {% for room in rooms %}
         <li class="list-group-item">
@@ -13,6 +25,9 @@
             <p>Session Type: {{ room.session_type }}</p>
             <p>Booked by: {{ room.user_name }}</p>
             <p>Trainer: {{ room.trainer_name }}</p>
+            <!-- 
+              This form allows the admin to update the session time for the room.
+            -->
             <form action="/admin/updateSessionTime" method="POST">
               <label for="new_time">Session Time:</label>
               <div class="d-flex">
@@ -34,9 +49,15 @@
         {% endfor %}
       </ul>
       {% else %}
+      <!-- 
+        This section displays a message if there are no sessions currently booked.
+      -->
       <p class="text-muted mt-0 mb-0">No sessions currently booked.</p>
       {% endif %}
 
+      <!-- 
+        This section contains a button that allows the admin to go back to the dashboard.
+      -->
       <div class="form-group mt-5">
         <a href="/admin/dashboard" class="btn btn-secondary">Go Back</a>
       </div>

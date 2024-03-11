@@ -1,5 +1,14 @@
+<!-- 
+  This is the main navigation bar for the Health and Fitness Club website. It contains links to 
+  different sections of the site depending on the user type (member, trainer, or admin). 
+  The navigation bar is responsive and will collapse into a hamburger menu on smaller screens.
+-->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <!-- This is the main brand of the navbar, clicking on it will redirect to the home page -->
   <a class="navbar-brand" href="/">Health and Fitness Club</a>
+
+  <!-- This condition checks if the current path is not login or register -->
   {% if request.path not in ['/login', '/register'] %}
   <button
     class="navbar-toggler"
@@ -12,8 +21,11 @@
   >
     <span class="navbar-toggler-icon"></span>
   </button>
+
+  <!-- This div contains the actual navigation links which are displayed based on the user type -->
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
+      <!-- If the user type is 'member', these links will be displayed -->
       {% if user_type == 'member' %}
       <li class="nav-item active">
         <a class="nav-link" href="/member/dashboard">Dashboard</a>
@@ -24,15 +36,21 @@
       <li class="nav-item">
         <a class="nav-link" href="/member/schedule">Schedule</a>
       </li>
+
+      <!-- If the user type is 'trainer', this link will be displayed -->
       {% elif user_type == 'trainer' %}
       <li class="nav-item active">
         <a class="nav-link" href="/trainer/dashboard">Dashboard</a>
       </li>
+
+      <!-- If the user type is 'admin', this link will be displayed -->
       {% elif user_type == 'admin' %}
       <li class="nav-item active">
         <a class="nav-link" href="/admin/dashboard">Dashboard</a>
       </li>
       {% endif %}
+
+      <!-- This is the logout link, clicking on it will log the user out -->
       <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
       </li>

@@ -1,3 +1,5 @@
+-- This file contains the DDL for the database. It creates all the tables and their columns.
+
 CREATE TABLE IF NOT EXISTS Members (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,

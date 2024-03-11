@@ -1,3 +1,8 @@
+<!--
+  This file is the checkout page for the member. It displays the items in the cart and allows the user to remove items 
+  from the cart or confirm their checkout. The user can also go back to the schedule page to add more items to the cart.
+ -->
+
 {% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
 
 <div class="container mt-5 mb-5">
@@ -7,6 +12,10 @@
 
       {% include 'alerts.html' %}
 
+      <!--  
+        This section displays the items in the cart. The items are displayed in a list group. Each item is displayed in a list group item with the 
+        session information. The user can click on a button to remove the item from the cart.
+      -->
       <div class="card mb-4">
         <div class="card-body">
           <h2 class="card-title">Cart Items</h2>
@@ -26,6 +35,9 @@
             </li>
             {% endfor %}
           </ul>
+          <!-- 
+            If the user does not have any items in their cart, a message is displayed to inform the user that they do not have any items in their cart. 
+          -->
           {% else %}
           <p class="text-muted">
             You do not have any items in your cart.

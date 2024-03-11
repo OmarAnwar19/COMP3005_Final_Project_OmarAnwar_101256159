@@ -1,3 +1,6 @@
+<!-- 
+  This is the member search page of the application. It allows the trainer to search for members by name. 
+-->
 {% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
 
 <div class="container mt-5 mb-5">
@@ -5,10 +8,17 @@
     <div class="card-body">
       <h1 class="card-header mb-5">Member Search</h1>
 
+      <!-- 
+        This section includes any alerts that need to be displayed to the trainer.
+      -->
       {% include 'alerts.html' %}
 
       <div class="card mb-4">
         <div class="card-body">
+          <!-- 
+            This form allows the trainer to search for members by name. The search query is sent to the server 
+            when the form is submitted.
+          -->
           <form action="/trainer/searchMembers" method="POST">
             <div class="row">
               <div class="col-9 mb-4">
@@ -29,6 +39,10 @@
             </div>
           </form>
 
+          <!-- 
+            This section displays the results of the search. If there are no results, a message is displayed 
+            indicating that no members were found.
+          -->
           {% if members %}
           <ul class="list-group mt-3">
             {% for member in members %}
@@ -45,6 +59,9 @@
           </p>
           {% endif %}
 
+          <!-- 
+            This button allows the trainer to return to the dashboard.
+          -->
           <div class="form-group mt-5">
             <a href="/trainer/dashboard" class="btn btn-secondary">Go Back</a>
           </div>

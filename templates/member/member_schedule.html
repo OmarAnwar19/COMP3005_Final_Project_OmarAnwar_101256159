@@ -1,3 +1,8 @@
+<!-- 
+  This is the member schedule page of the application. It displays a schedule for a member and
+  allows the user to manage the schedule.
+-->
+
 {% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
 
 <div class="container mt-5 mb-5">
@@ -5,8 +10,15 @@
     <div class="card-body">
       <h1 class="card-header mb-5">Member Schedule</h1>
 
+      <!-- 
+        This section includes any alerts that need to be displayed to the member.
+      -->
       {% include 'alerts.html' %}
 
+      <!--
+        The schedule is displayed in a list group. Each schedule item is displayed in a list group item with the 
+        date, time, and activity. The user can click on a button to remove the session from their schedule.
+      -->
       <div class="card mb-4">
         <div class="card-body">
           <h2 class="card-title">Current Sessions</h2>
@@ -32,6 +44,11 @@
         </div>
       </div>
 
+      <!-- 
+        This section allows the user to book a session. It displays a form with fields for the session type, session time, 
+        available trainers, and available rooms. The user can select a session type, session time, trainer, and room, and 
+        click on a button to add the session to their cart. The user can also click on a button to proceed to checkout.
+      -->
       <div class="card">
         <div class="card-body">
           <div class="d-flex justify-content-between">
@@ -134,6 +151,9 @@
         </div>
       </div>
 
+      <!-- 
+        This is the cart modal. It is a modal that displays the items in the user's cart. The user can click on a button to remove an item from the cart, or click on a button to proceed to checkout.
+      -->
       <div
         class="modal fade"
         id="cartModal"
@@ -186,6 +206,9 @@
               >
                 Close
               </button>
+              <!-- 
+                The user can proceed to checkout if there are items in the cart.
+              -->
               {% if session['cart'] %}
               <a href="/member/checkout" class="btn btn-success"
                 >Proceed to Checkout</a

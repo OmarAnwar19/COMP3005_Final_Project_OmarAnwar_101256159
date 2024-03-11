@@ -1,9 +1,14 @@
+<!-- 
+  This is a generic 403 page that is displayed when the user tries to access a page that they are not authorized to access.
+-->
+
 {% extends "layout.html" %} {% block content %} {% include "navbar.html" %}
 
 <div class="container text-center py-5">
   <h2 class="mb-4">403 Error :(</h2>
   <p class="mb-4">Sorry! You are not authorized to access this page.</p>
   <div class="mb-4">
+    <!-- Link to go back to the home page. -->
     <a href="/" class="btn btn-primary mb-3">Go Back Home</a>
   </div>
 </div>

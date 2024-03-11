@@ -36,15 +36,16 @@ This project is a web application built with Flask and Python, designed to manag
 
 ## Implementation
 
-### File Structure and Architecture
+The overall application is a web-based platform developed using Flask, a micro web framework written in Python. The application follows the MVC architecture, with separate modules for handling database operations, business logic, and the user interface. The general flow of the application is that the user interacts with the user interface, which sends requests to the Flask application. The Flask application then processes these requests, interacts with the database as necessary, and returns the appropriate response to the user, and the user interface displays this response to the user through different views and templates, which are rendered by the Flask application to the web browser. The application also interacts with a PostgreSQL relational database, which stores and manages all the data related to members, trainers, sessions, rooms, equipment, and more, through the Psycopg2 library.
 
-The application is built with Flask and Python, and uses a PostgreSQL database to store data. The application follows the MVC architecture, with separate modules for handling database operations, business logic, and the user interface.
+### File Structure and Architecture
 
 The application is structured as follows:
 
-- `/database`: This directory contains files related to setting up the database, including DDL scripts for creating tables and inserting initial data.
+- `/database`: This directory contains files related to the database, including the database connection settings, and configuration keys.
+- `/database/queries`: This directory contains functions for executing SQL queries against the database. These functions are used by the route handlers to interact with the database.
 - `/routes`: This directory contains the route handlers for the Flask application. Each file corresponds to a different endpoint of the application.
-- `/SQL`: This directory contains SQL queries used in the application.
+- `/SQL`: This directory contains SQL queries used in the application, including DDL and DML scripts for creating tables and inserting initial data.
 - `/static`: This directory contains static files like CSS and JavaScript files.
 - `/templates`: This directory contains the HTML templates for the application. Flask uses these templates to generate the HTML that it sends to the client.
 - `/util`: This directory contains utility functions and classes that are used throughout the application.
@@ -56,7 +57,7 @@ The database consists of several tables representing entities such as members, t
 
 ### Bonus Features
 
-- **User Authentication**: The application uses a secure authentication system to ensure that only authorized users can access the system. Passwords are stored securely in the database.
+- **User Authentication**: The application uses a secure authentication system to ensure that only authorized users can access the system. At the moment, passwords are stored in the database in plain text, however, in the future they would be encrypted to ensure a more secure connection.
 - **Role-Based Access Control**: The application uses role-based access control to ensure that users can only access the features that are relevant to their role. For example, members can only view their own dashboard, while administrative staff can view and manage all members and trainers.
 - **Web Application**: The application is a web application built with Flask, which allows users to access it from any device with a web browser. This was quite a time-consuming task, but means that the application is more accessible and easier to use than a command-line application.
 - **Responsive Design**: The application uses responsive design to ensure that it looks good and is easy to use on any device, including desktops, tablets, and smartphones.
@@ -64,6 +65,8 @@ The database consists of several tables representing entities such as members, t
 - **Error Handling**: The application uses error handling to ensure that users receive helpful error messages when something goes wrong. This helps to prevent frustration and confusion when using the application.
 - **Session Management**: The application uses session management to ensure that users remain logged in as they navigate the application. This means that users don't have to log in every time they visit a new page, which makes the application more convenient to use.
 - **Additional User Functions**: The application includes additional user functions which are not required by the project spec, such as increased administrative staff functions, and the ability for members to modify their cart for bookings.
+
+These features represent significant additional effort, accounting for more than 10% of the overall project workload. They also introduce innovative elements to the system, such as a fully functional web application with server-side session management, and a responsive design that adapts to different screen sizes. These features are not only functional, but also add significant value to the system, making it more user-friendly and accessible, while meeting all the requirements of the project spec.
 
 ## Running the Application
 

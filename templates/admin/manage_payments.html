@@ -1,12 +1,21 @@
+<!--
+  This file contains the HTML for the manage payments page. It displays the unprocessed, approved, and rejected payments in tabs. 
+  The admin can approve or reject unprocessed payments and view approved and rejected payments.
+-->
+
 {% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
 
 <div class="container mt-5 mb-5">
   <div class="card">
     <h1 class="card-header mb-4">Process Payments</h1>
     <div class="card-body">
+      <!-- 
+        This section includes any alerts that need to be displayed to the admin.
+      -->
       {% include 'alerts.html' %}
 
       <ul class="nav nav-tabs mb-4" id="pills-tab" role="tablist">
+        <!-- Unprocessed tab -->
         <li class="nav-item">
           <a
             class="nav-link active"
@@ -17,6 +26,7 @@
             >Unprocessed</a
           >
         </li>
+        <!-- Approved tab -->
         <li class="nav-item">
           <a
             class="nav-link"
@@ -27,6 +37,7 @@
             >Approved</a
           >
         </li>
+        <!-- Rejected tab -->
         <li class="nav-item">
           <a
             class="nav-link"
@@ -39,12 +50,19 @@
         </li>
       </ul>
 
+      <!-- 
+        This section contains the content for the unprocessed, approved, and rejected payments.
+      -->
       <div class="tab-content" id="pills-tabContent">
         <div
           class="tab-pane fade show active"
           id="pills-unprocessed"
           role="tabpanel"
         >
+          <!--
+            This section displays a list of unprocessed payments. For each payment, it displays the amount, member name, session type, trainer name, and payment date. 
+            It also includes buttons to approve or reject the payment.
+          -->
           {% if unprocessed_payments %}
           <ul class="list-group">
             {% for payment in unprocessed_payments %}
@@ -76,12 +94,19 @@
             </li>
             {% endfor %}
           </ul>
+          <!--
+            If there are no unprocessed payments, a message is displayed indicating that no unprocessed payments were found.
+          -->
           {% else %}
           <p class="text-muted">No unprocessed payments found.</p>
           {% endif %}
         </div>
 
         <div class="tab-pane fade" id="pills-approved" role="tabpanel">
+          <!--
+            This section displays a list of approved payments. For each payment, it displays the amount, member name, 
+            session type, trainer name, and payment date.
+          -->
           {% if approved_payments %}
           <ul class="list-group">
             {% for payment in approved_payments %}
@@ -95,12 +120,19 @@
             </li>
             {% endfor %}
           </ul>
+          <!--
+            If there are no approved payments, a message is displayed indicating that no approved payments were found.
+          -->
           {% else %}
           <p class="text-muted">No approved payments found.</p>
           {% endif %}
         </div>
 
         <div class="tab-pane fade" id="pills-rejected" role="tabpanel">
+          <!--
+            This section displays a list of rejected payments. For each payment, it displays the amount, member name, 
+            session type, trainer name, and payment date.
+          -->
           {% if rejected_payments %}
           <ul class="list-group">
             {% for payment in rejected_payments %}
@@ -114,12 +146,18 @@
             </li>
             {% endfor %}
           </ul>
+          <!--
+            If there are no rejected payments, a message is displayed indicating that no rejected payments were found.
+          -->
           {% else %}
           <p class="text-muted">No rejected payments found.</p>
           {% endif %}
         </div>
       </div>
 
+      <!-- 
+        This section contains a button that allows the admin to go back to the dashboard.
+      -->
       <div class="form-group mt-5">
         <a href="/admin/dashboard" class="btn btn-secondary">Go Back</a>
       </div>

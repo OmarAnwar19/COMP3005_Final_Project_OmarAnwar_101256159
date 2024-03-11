@@ -1,3 +1,8 @@
+<!-- 
+  This is the main layout file for the Health and Fitness Club website. It includes the
+  basic HTML structure, the site title, favicon, Bootstrap CSS, and JavaScript libraries. 
+-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,13 +12,17 @@
       href="{{ url_for('static', filename='favicon.ico') }}"
       type="image/x-icon"
     />
+    <!-- Link to the Bootstrap CSS library, it provides styles for the website -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     />
   </head>
   <body>
+    <!-- This is a block where the content of child templates will be inserted -->
     {% block content %} {% endblock %}
+
+    <!-- Link to the bootstrap javascript dependencies -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

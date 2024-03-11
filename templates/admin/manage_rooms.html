@@ -1,3 +1,6 @@
+<!-- 
+  This is the Room Management page of the application. It allows the admin to view and manage the rooms.
+-->
 {% extends "layout.html" %} {% block content %} {% include 'navbar.html' %}
 
 <div class="container mt-5 mb-5">
@@ -5,10 +8,16 @@
     <div class="card-body">
       <h1 class="card-header mb-4">Room Management</h1>
 
+      <!-- 
+        This section includes any alerts that need to be displayed to the admin.
+      -->
       {% include 'alerts.html' %}
 
       <div class="row">
         <div class="col-12 mt-2">
+          <!-- 
+            This button triggers the modal to add a new room.
+          -->
           <button
             type="button"
             class="btn btn-primary mb-4 w-100"
@@ -21,6 +30,10 @@
       </div>
 
       {% if rooms %}
+      <!-- 
+        This section displays a list of rooms. For each room, it displays the room name, session details if booked, 
+        and allows the admin to delete the room or unbook it.
+      -->
       <ul class="list-group mt-3">
         {% for room in rooms %}
         <li class="list-group-item">
@@ -36,11 +49,17 @@
             {% endif %}
           </div>
           <div class="d-flex">
+            <!-- 
+              This form allows the admin to delete the room.
+            -->
             <form action="/admin/deleteRoom" method="POST" class="mr-3">
               <input type="hidden" name="room_id" value="{{ room.id }}" />
               <button type="submit" class="btn btn-danger">Delete Room</button>
             </form>
             {% if room.booked %}
+            <!-- 
+              If a given room is booked, this form allows the admin to unbook the room.
+            -->
             <form action="/admin/unbookRoom" method="POST">
               <input type="hidden" name="room_id" value="{{ room.id }}" />
               <button type="submit" class="btn btn-warning">Unbook</button>
@@ -51,9 +70,15 @@
         {% endfor %}
       </ul>
       {% else %}
+      <!-- 
+        This section displays a message if there are no rooms.
+      -->
       <p class="text-muted mt-0 mb-0">No rooms found. Please add a new room.</p>
       {% endif %}
 
+      <!-- 
+        This section contains a button that allows the admin to go back to the dashboard.
+      -->
       <div class="form-group mt-5">
         <a href="/admin/dashboard" class="btn btn-secondary">Go Back</a>
       </div>
@@ -61,6 +86,9 @@
   </div>
 </div>
 
+<!-- 
+  This is the modal for adding a new room. It contains a form that the admin can fill out to add a new room.
+-->
 <div
   class="modal fade"
   id="addRoomModal"
@@ -82,6 +110,9 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <!-- 
+        This form allows the admin to add a new room.
+      -->
       <form action="/admin/manage/addRoom" method="POST">
         <div class="modal-body">
           <div class="form-group">
