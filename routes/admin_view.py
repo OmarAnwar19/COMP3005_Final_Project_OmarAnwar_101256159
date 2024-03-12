@@ -143,6 +143,19 @@ def add_room():
         return redirect(url_for("admin_view.admin_dashboard"))
     
 
+@admin_view.route("/admin/unbookRoom", methods=["POST"])
+def unbook_room_session():
+    # making sure the request method is POST, so that we dont get any errors
+    if request.method == "POST":
+        # get the room id from the form
+        room_id = request.form.get("room_id")
+        # call the unbook_room function with the room id
+        unbook_room(room_id)
+        # flash a message and redirect to the admin dashboard
+        flash("Room unbooked successfully!", "success")
+        return redirect(url_for("admin_view.manage_rooms"))
+
+
 # creating a route for the manage equipment page
 @admin_view.route("/admin/deleteRoom", methods=["POST"])
 def delete_room_session():
