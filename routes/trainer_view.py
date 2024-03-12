@@ -47,8 +47,8 @@ def member_details(member_id):
     raw_exercises = get_member_exercises(member_id)
     # format the exercises into a list of strings
     exercises = [
-        f"{i+1}) {name} - {format_datetime(date)}" 
-        for i, (_, _, name, date) in enumerate(raw_exercises)
+        f"{i+1}) {name}" 
+        for i, (_, _, name) in enumerate(raw_exercises)
     ]
     # for the achievements, we need to split the string into a list
     raw_achievements = get_member_achievements(member_id)

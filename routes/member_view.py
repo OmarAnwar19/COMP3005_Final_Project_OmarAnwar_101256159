@@ -25,11 +25,14 @@ def member_dashboard():
         f"{i+1}) {s_type} with {trainer} in {room} - {format_datetime(date)}" 
         for i, (_, _, _, _, date, s_type, trainer, room) in enumerate(raw_sessions)
     ]
+
+    print(sessions)
+
     raw_exercises = get_member_exercises(member_id)
     # format the exercises into a list of strings
     exercises = [
-        f"{i+1}) {name} - {format_datetime(date)}" 
-        for i, (_, _, name, date) in enumerate(raw_exercises)
+        f"{i+1}) {name}" 
+        for i, (_, _, name) in enumerate(raw_exercises)
     ]
     # for the achievements, we need to split the string into a list
     raw_achievements = get_member_achievements(member_id)
@@ -42,7 +45,7 @@ def member_dashboard():
         "Avg. Nightly Sleep": f"{raw_health_stats[0][4]}hrs",
     }
     # render the member page with the member username, sessions, exercises, achievements, and health stats
-    return render_template("trainer/search/member_page.html", member=username, sessions=sessions, exercises=exercises, achievements=achievements, health_stats=health_stats)
+    return render_template("member/member_dashboard.html", member=username, sessions=sessions, exercises=exercises, achievements=achievements, health_stats=health_stats)
 
 
 # creating a route for the member profile

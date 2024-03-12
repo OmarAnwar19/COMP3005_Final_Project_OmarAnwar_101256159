@@ -48,46 +48,105 @@
   </li>
 </ul>
 
-<!-- Achievements tab content -->
-<div class="tab-pane fade" id="pills-achievements" role="tabpanel">
-  <div class="card mb-5">
-    <div class="card-header">
-      <h2>Achievements</h2>
-    </div>
-    <div class="card-body">
+<!-- Sessions tab content -->
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-sessions" role="tabpanel">
+    <div class="card mb-5">
+      <div class="card-header">
+        <h2>Booked Sessions</h2>
+      </div>
       <!-- 
-        If there are achievements, loop through each achievement and output it as a list item.
+        If there are sessions, loop through each session and output it as a list item.
       -->
-      {% if achievements %}
-      <ul class="list-group">
-        {% for achievement in achievements %}
-        <li class="list-group-item">{{ achievement }}</li>
-        {% endfor %}
-      </ul>
-      <!-- 
-        If there are no achievements, display a message. If the user is a member, also display a button to the member profile page.
-      -->
-      {% else %}
-      <p class="text-muted">
-        No achievements found. {% if user_type == "member" %} Please
-        <a href="/member/profile">update your profile</a>. {% endif %}
-      </p>
-      {% endif %}
+      <div class="card-body">
+        {% if sessions %}
+        <ul class="list-group">
+          {% for session in sessions %}
+          <li class="list-group-item">{{ session }}</li>
+          {% endfor %}
+        </ul>
+        <!-- 
+          If there are no sessions, display a message. If the user is a member, also display a button to the member schedule page.
+        -->
+        {% else %}
+        <p class="text-muted">
+          No sessions found. {% if user_type == "member" %}
+          <a href="/member/schedule"> Please book a session</a>. {% endif %}
+        </p>
+        {% endif %}
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Health Stats tab content -->
-<div class="tab-pane fade" id="pills-health-stats" role="tabpanel">
-  <div class="card mb-5">
-    <div class="card-header">
-      <h2>Health Stats</h2>
+  <!-- Exercises tab content -->
+  <div class="tab-pane fade" id="pills-exercises" role="tabpanel">
+    <div class="card mb-5">
+      <div class="card-header">
+        <h2>Exercises</h2>
+      </div>
+      <div class="card-body">
+        <!-- 
+          If there are exercises, loop through each exercise and output it as a list item.
+        -->
+        {% if exercises %}
+        <ul class="list-group">
+          {% for exercise in exercises %}
+          <li class="list-group-item">{{ exercise }}</li>
+          {% endfor %}
+        </ul>
+        <!-- 
+          If there are no exercises, display a message. If the user is a member, also display a button to the member profile page.
+        -->
+        {% else %}
+        <p class="text-muted">
+          No exercises found. {% if user_type == "member" %} Please
+          <a href="/member/profile">update your profile</a>.{% endif %}
+        </p>
+        {% endif %}
+      </div>
     </div>
-    <div class="card-body">
-      <!-- 
+  </div>
+
+  <!-- Achievements tab content -->
+  <div class="tab-pane fade" id="pills-achievements" role="tabpanel">
+    <div class="card mb-5">
+      <div class="card-header">
+        <h2>Achievements</h2>
+      </div>
+      <div class="card-body">
+        <!-- 
+          If there are achievements, loop through each achievement and output it as a list item.
+        -->
+        {% if achievements %}
+        <ul class="list-group">
+          {% for achievement in achievements %}
+          <li class="list-group-item">{{ achievement }}</li>
+          {% endfor %}
+        </ul>
+        <!-- 
+          If there are no achievements, display a message. If the user is a member, also display a button to the member profile page.
+        -->
+        {% else %}
+        <p class="text-muted">
+          No achievements found. {% if user_type == "member" %} Please
+          <a href="/member/profile">update your profile</a>. {% endif %}
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Health Stats tab content -->
+  <div class="tab-pane fade" id="pills-health-stats" role="tabpanel">
+    <div class="card mb-5">
+      <div class="card-header">
+        <h2>Health Stats</h2>
+      </div>
+      <div class="card-body">
+        <!-- 
         If there are health stats, they will be output in the following section.
       -->
-      {% if health_stats %}
+        {% if health_stats %}
         <ul class="list-group">
           {% for stat, value in health_stats.items() %}
           <li class="list-group-item">{{ stat }}: {{ value }}</li>

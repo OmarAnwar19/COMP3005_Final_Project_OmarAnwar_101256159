@@ -8,19 +8,130 @@
     <div class="card-body">
       <h1 class="card-header mb-5">Update Profile</h1>
 
+      <!--
+        This form allows the member to update their profile. The form includes fields for the username, password, exercises, fitness goal, achievements, weight, heart rate, and sleep. The form also includes a button to submit the updated profile details.
+      -->
       <div class="card mb-4">
         <div class="card-body">
-          <!-- 
-            The form starts here. It uses the POST method to send data and the action attribute specifies the endpoint ("/member/updateProfile") 
-            where the form data will be sent when the form is submitted.
-          -->
           <form method="POST" action="/member/updateProfile">
-            <!-- 
-              This is a form group for the heart rate. It has a label and an input field of type number. 
-              The 'id' and 'name' attributes of the input field are set to "heart_rate". 
-              The 'value' attribute is set to the second element of the 'health_stats' list (index 1). 
-              The 'required' attribute is a boolean attribute indicating that the user must fill out this field before submitting the form.
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  name="username"
+                  value="{{member[1]}}"
+                  required
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  value="{{member[2]}}"
+                  required
+                />
+              </div>
+            </div>
+
+            <!--
+              This section includes the exercises field. The exercises are displayed as checkboxes, and the member can select multiple exercises. The selected exercises 
+              are pre-populated based on the member's profile details, and they can be updated by the member.
             -->
+            <div class="form-group">
+              <label for="exercises">Exercises</label>
+              <div id="exercises">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Cardio"
+                  id="exercise1" name="exercises" {% if 'Cardio' in exercises
+                  %}checked{% endif %} />
+                  <label class="form-check-label" for="exercise1">Cardio</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox"
+                  value="Pilates" id="exercise2" name="exercises" {% if
+                  'Pilates' in exercises %}checked{% endif %} />
+                  <label class="form-check-label" for="exercise2"
+                    >Pilates</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox"
+                  value="Weights" id="exercise3" name="exercises" {% if
+                  'Weights' in exercises %}checked{% endif %} />
+                  <label class="form-check-label" for="exercise3"
+                    >Weights</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox"
+                  value="Cross-fit" id="exercise4" id="exercise1"
+                  name="exercises" {% if 'Cross-fit' in exercises %}checked{%
+                  endif %} />
+                  <label class="form-check-label" for="exercise4"
+                    >Cross-fit</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Yoga"
+                  id="exercise5" id="exercise5" name="exercises" {% if 'Yoga' in
+                  exercises %}checked{% endif %} />
+                  <label class="form-check-label" for="exercise5">Yoga</label>
+                </div>
+              </div>
+            </div>
+
+            <!--
+              This section includes the fitness goal field. The fitness goal is displayed as a dropdown, and the member can select one fitness goal. The selected fitness goal is pre-populated based on the member's profile details, and it can be updated by the member.
+            -->
+            <div class="form-group">
+              <label for="fitness_goal">Fitness Goal</label>
+              <select
+                class="form-control"
+                id="fitness_goal"
+                name="fitness_goal"
+              >
+                <option>Lose weight</option>
+                <option>Gain muscle</option>
+                <option>Improve stamina</option>
+                <option>Increase flexibility</option>
+                <option>Improve overall fitness</option>
+              </select>
+            </div>
+
+            <!--
+              This section includes the achievements field. The achievements are displayed as a comma-separated list, and the member can enter multiple achievements. The achievements are pre-populated based on the member's profile details, and they can be updated by the member.
+            -->
+            <div class="form-group">
+              <label for="achievements">Achievements (comma-separated)</label>
+              <input
+                type="text"
+                class="form-control"
+                id="achievements"
+                name="achievements"
+                value="{{member[4]}}"
+              />
+            </div>
+
+            <!--
+              The user can also update their health stats, including their weight, heart rate, and average nightly sleep. The health stats are pre-populated based on the member's profile details, and they can be updated by the member.
+            -->
+            <div class="form-group">
+              <label for="weight">Weight (lbs)</label>
+              <input
+                type="number"
+                class="form-control"
+                id="weight"
+                name="weight"
+                required
+                value="{{health_stats[0]}}"
+              />
+            </div>
             <div class="form-group">
               <label for="heart_rate">Heart Rate (bpm)</label>
               <input
@@ -32,13 +143,6 @@
                 required
               />
             </div>
-
-            <!-- 
-              This is a form group for the average nightly sleep. It has a label and an input field of type number. 
-              The 'id' and 'name' attributes of the input field are set to "sleep". 
-              The 'value' attribute is set to the third element of the 'health_stats' list (index 2). 
-              The 'required' attribute is a boolean attribute indicating that the user must fill out this field before submitting the form.
-            -->
             <div class="form-group">
               <label for="sleep">Avg. Nightly Sleep (hrs)</label>
               <input
@@ -50,12 +154,6 @@
                 required
               />
             </div>
-
-            <!-- 
-              This is a form group for the form actions. It contains two buttons: 
-              - A link styled as a button that redirects to the "/member/dashboard" endpoint when clicked.
-              - A submit button that submits the form data when clicked.
-            -->
             <div class="form-group mt-5">
               <a href="/member/dashboard" class="btn btn-secondary">Go Back</a>
               <button type="submit" class="btn btn-primary">Update</button>
