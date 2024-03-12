@@ -25,9 +25,6 @@ def member_dashboard():
         f"{i+1}) {s_type} with {trainer} in {room} - {format_datetime(date)}" 
         for i, (_, _, _, _, date, s_type, trainer, room) in enumerate(raw_sessions)
     ]
-
-    print(sessions)
-
     raw_exercises = get_member_exercises(member_id)
     # format the exercises into a list of strings
     exercises = [
@@ -97,10 +94,12 @@ def update_profile():
     # making sure the request method is POST, so that we dont get any errors
     if request.method == "POST":
         # get all the form data from the request
-        user_type = session["user_type"]
-        member_id = session["member_id"]
-        username = request.form.get("username")
-        password = request.form.get("password")
+        user_type = session.get("user_type")
+        member_id = session.get("member_id")
+        new_username = request.form.get("username")
+        new_password = request.form.get("password")
+        old_username = session.get("username")
+        old_password = get_member_by_id(member_id)[2]
         fitness_goal = request.form.get("fitness_goal")
         exercises = request.form.getlist("exercises")
         achievements = request.form.get("achievements")
@@ -109,17 +108,17 @@ def update_profile():
         sleep = request.form.get("sleep")
 
         # get the member by username their username
-        user = get_member_by_username(user_type, username)
+        user = get_member_by_username(user_type, new_username)
         # if the member exists, flash a warning message
-        if user:
-            flash(f"{user_type} {username} already exists.", "warning")
+        if new_username != old_username and user:
+            flash(f"{user_type} {old_username} already exists.", "warning")
         # or if the password is invalid, flash a danger message
-        elif not validate_password(password):
+        elif new_password != old_password and not validate_password(new_password):
             flash("Password must be at least 6 characters long, and contain a number and an uppercase letter.", "danger")
         # otherwise, update the member profile, health stats, and exercises
         else:
             # update the member profile, health stats, and exercises with the appropriate queries
-            update_member_profile(user_type, username, password, fitness_goal, achievements)
+            update_member_profile(user_type, new_username, new_password, fitness_goal, achievements)
             update_member_health_stats(member_id, weight, heart_rate, sleep)
             update_member_exercises(member_id, exercises)
             # flash a success message and redirect to the member profile page

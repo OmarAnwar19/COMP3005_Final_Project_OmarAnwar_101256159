@@ -64,7 +64,7 @@ def register():
             insert_new_member(user_type, username, password)
             # flash a success message and redirect to the register page
             flash(f"{user_type} {username} has been registered successfully", "success")
-        return redirect(url_for("auth.register"))
+        return redirect(url_for("auth.login"))
     # if the request method is GET, render the register page
     return render_template("auth/register.html")
 
